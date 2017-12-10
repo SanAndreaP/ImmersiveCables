@@ -1,0 +1,175 @@
+# Misc
+itemGroup.immersiveintegration=Immersive Integration
+
+
+# AE2
+item.immersiveintegration:wireCoilFluix.name=Fluix Wire Coil
+item.immersiveintegration:wireCoilDense.name=Dense Wire Coil
+
+tile.immersiveintegration:meWireConnector.name=ME Wire Connector
+tile.immersiveintegration:meDenseWireConnector.name=ME Dense Wire Connector
+tile.immersiveintegration:meTransformer.name=ME Transformer
+tile.immersiveintegration:meDenseTransformer.name=ME Dense Transformer
+tile.immersiveintegration:aeDecorationFluixCoil.name=Fluix Wire Coil
+tile.immersiveintegration:aeDecorationDenseCoil.name=Dense Wire Coil
+
+
+## IE/II
+tile.immersiveintegration:extendedPost.name=Wooden Post Extension
+tile.immersiveintegration:extendablePost.name=Extendable Wooden Post
+tile.immersiveintegration:steelTrapdoor.name=Steel Trapdoor
+tile.immersiveintegration:redstoneWireConnector.name=Redstone Wire Connector
+tile.immersiveintegration:industrialCokeOven.name=Industrial Coke Oven
+tile.immersiveintegration:itemRobin.name=Item Robin
+
+tile.immersiveintegration:inductionChargerLV.name=LV Induction Charger
+tile.immersiveintegration:inductionChargerMV.name=MV Induction Charger
+tile.immersiveintegration:inductionChargerHV.name=HV Induction Charger
+
+tile.immersiveintegration:steelDecorationOvenWall.name=Coke Oven Wall
+tile.immersiveintegration:steelDecorationOvenWallHeated.name=Heated Coke Oven Wall
+tile.immersiveintegration:steelDecorationOvenWallPort.name=Coke Oven Port
+
+item.immersiveintegration:iiWireCoilRedstone.name=Redstone Wire Coil
+
+item.immersiveintegration:capacitorBoxLV.name=LV Capacitor in a Box
+item.immersiveintegration:capacitorBoxMV.name=MV Capacitor in a Box
+item.immersiveintegration:capacitorBoxHV.name=HV Capacitor in a Box
+item.immersiveintegration:capacitorBoxCreative.name=Creative Capacitor in a Box
+
+
+# Tooltips
+immersiveintegration.tooltip.safe=Safe for decoration
+
+immersiveintegration.tooltip.capacitor.infinite=Infinite RF
+immersiveintegration.tooltip.capacitor.active0=Right click to stop sharing
+immersiveintegration.tooltip.capacitor.active1=power with held items
+immersiveintegration.tooltip.capacitor.rightClickActive0=Right click to share
+immersiveintegration.tooltip.capacitor.rightClickActive1=power with held items
+
+
+# Colors
+immersiveintegration.color.black=Black
+immersiveintegration.color.red=Red
+immersiveintegration.color.green=Green
+immersiveintegration.color.brown=Brown
+immersiveintegration.color.blue=Blue
+immersiveintegration.color.purple=Purple
+immersiveintegration.color.cyan=Cyan
+immersiveintegration.color.lightGrey=Light Gray
+immersiveintegration.color.grey=Gray
+immersiveintegration.color.pink=Pink
+immersiveintegration.color.lime=Lime
+immersiveintegration.color.yellow=Yellow
+immersiveintegration.color.lightBlue=Light Blue
+immersiveintegration.color.magenta=Magenta
+immersiveintegration.color.orange=Orange
+immersiveintegration.color.white=White
+
+
+# Manual
+ie.manual.category.immersiveintegration.name=Immersive Integration
+
+ie.manual.entry.extendablePost.name=Extendable Post
+ie.manual.entry.extendablePost.subtext=Yup.
+ie.manual.entry.extendablePost0=This allows for a post to be as large as you would like. Place the base down and simply place treated fence posts on top. You can also use the hammer to create arms.
+
+ie.manual.entry.steelTrapdoor.name=Steel Trapdoor
+ie.manual.entry.steelTrapdoor.subtext=Shhh. It's a secret
+ie.manual.entry.steelTrapdoor0=Works just like a normal trapdoor, except it can ONLY be opened with a redstone signal.
+
+ie.manual.entry.redstoneWiring.name=Redstone Wiring
+ie.manual.entry.redstoneWiring.subtext=Signal wires, on telegraph poles?
+ie.manual.entry.redstoneWiring0=To get started you need a Redstone Wire Coil, and at least 2 Redstone Wire Connectors. You can connect them together like regular wires.
+ie.manual.entry.redstoneWiring1=Each connector can be assigned as an Input or an Output, as well as be assigned one of 16 channels. Rightclick with a hammer to toggle input and output mode, and shift rightclick with a hammer to change the channel. Rightclick with an empty hand to display the current mode and channel.
+ie.manual.entry.redstoneWiring2=Each channel is independent of each other allowing multiple signal to be relayed over one wire. The wire connectors output a strong signal on the bottom of the connector, and a weak signal on all other sides.
+
+ie.manual.entry.meWiring.name=ME Wiring
+ie.manual.entry.meWiring.subtext=Applied Energistics 2 Wiring
+ie.manual.entry.meWiring0=There are two types of wire coils for use with AE2. These are fluix and dense. As you may be able to guess, the Fluix Wire Coil is capable of transferring 8 channels, and the Dense Wire Coil is capable of 32 channels.
+ie.manual.entry.meWiring1=To connect two parts of your system together, you will need at least two transformers. One to step up the signal to transmit across the wires, and a second to step back down the signal for use with normal fluix cables.
+ie.manual.entry.meWiring2=Whilst you can connect two transformers directly to each other, you will likely want to go a longer distance. Use the wire connectors with their respective wire coil to increase the distance.
+ie.manual.entry.meWiring3=You will need to build some wire coil blocks in order to make a transformer.
+
+ie.manual.entry.industrialCokeOven.name=Industrial Coke Oven
+ie.manual.entry.industrialCokeOven.subtext=Industrial Revolution
+ie.manual.entry.industrialCokeOven0=It soon becomes apparent that a traditional coke oven is just not good enough. You could build more coke ovens.. or you could build an Industrial Coke Oven!
+ie.manual.entry.industrialCokeOven1=The industrial coke oven allows 4 pieces of coal coke to cook up at once. This new oven also seems more efficient, cooking faster, and yielding more resources per operation. Inserting items into all 4 slots would be tricky without some kind of <link;itemRobin;§o§nround robin§r;0> system.
+ie.manual.entry.industrialCokeOven2=You didn't think this would be easy did you?
+
+ie.manual.entry.itemRobin.name=Item Robin
+ie.manual.entry.itemRobin.subtext=Chirp, chirp.
+ie.manual.entry.itemRobin0=The item robin will take an input and share it out to adjacent inventories (including conveyors). You can right click a side with the number of items you would like to go into an inventory on that side per cycle.
+ie.manual.entry.itemRobin1=Holding a hammer in your hand will allow you to see the current settings on each side. Once you have it configured, you can right click the block with a hammer to toggle it locked.
+
+ie.manual.entry.capacitorBox.name=Capacitor in a Box
+ie.manual.entry.capacitorBox.subtext=Capacitor + Box = Flat Square..?
+ie.manual.entry.capacitorBox0=Shoving a capacitor into a wooden crate allows you to carry your capacitor around and use it to charge other items. If you have Tinkers' Construct, then you can place a capacitor in a box on your tools. You can charge your capacitor in a box using the <link;inductionCharger;§o§ninduction charger§r;0>
+
+ie.manual.entry.inductionCharger.name=Induction Charger
+ie.manual.entry.inductionCharger.subtext=Compatible with leading brands
+ie.manual.entry.inductionCharger0=Charge your items through the science of induction; just like your mobile phone, you can charge many other items 'wirelessly'. Simply throw your item onto the induction charger and watch it charge. If you stand on top of the charger it might just charge the items you are carrying.
+
+
+# Chat
+
+immersiveintegration.chat.channel=Channel:
+immersiveintegration.chat.mode=Mode:
+immersiveintegration.chat.channelSet=Channel Set:
+immersiveintegration.chat.modeSet=Mode Set:
+immersiveintegration.chat.input=Input
+immersiveintegration.chat.output=Output
+
+immersiveintegration.chat.itemRobin.countSet=Item count set to
+immersiveintegration.chat.itemRobin.locked=Locked
+immersiveintegration.chat.itemRobin.itemCount=Item Count: %s
+
+
+# Config
+immersiveintegration.config.category.ae=Applied Energistics 2
+immersiveintegration.config.category.ae.tooltip=Applied Energistics 2 Additions
+immersiveintegration.config.category.ie=Immersive Integration
+immersiveintegration.config.category.ie.tooltip=Immersive Engineering Additions
+immersiveintegration.config.category.minecraft=Minecraft
+immersiveintegration.config.category.minecraft.tooltip=Minecraft Additions
+immersiveintegration.config.category.other=Other
+immersiveintegration.config.category.other.tooltip=Miscellaneous
+
+immersiveintegration.config.enableAE=Enable AE2 Integration
+immersiveintegration.config.desc.enableAE=Enable/disable the AE2 specific content if AE2 is installed
+
+immersiveintegration.config.fluixWireRange=Fluix Wire Range
+immersiveintegration.config.desc.fluixWireRange=The maximum range of Fluix Wires before needing a support
+
+immersiveintegration.config.denseWireRange=Dense Wire Range
+immersiveintegration.config.desc.denseWireRange=The maximum range of Dense Wires before needing a support
+
+immersiveintegration.config.redstoneWireRange=Redstone Wire Range
+immersiveintegration.config.desc.redstoneWireRange=The maximum range of Redstone Wires before needing a support
+
+immersiveintegration.config.cokeOvenDoubleChance=Coke Oven Double Chance
+immersiveintegration.config.desc.cokeOvenDoubleChance=The chance the coke oven will give an extra output. A value of 10 would be 1 in 10 chance
+
+immersiveintegration.config.cokeOvenCreosoteMultiplier=Coke Oven Creosote Multiplier
+immersiveintegration.config.desc.cokeOvenCreosoteMultiplier=How much more creosote to give per operation. A value of 1.5 would yield 1.5 x creosote output
+
+immersiveintegration.config.cokeOvenTimeMultiplier=Coke Oven Time Multiplier
+immersiveintegration.config.desc.cokeOvenTimeMultiplier=Value to multiply the base cooking speed by. A value of 0.5 would be half the time needed.
+
+immersiveintegration.config.meTransformerPowerDrain=ME Transformer Power Drain
+immersiveintegration.config.desc.meTransformerPowerDrain=How much power to drain per transformer in AE/t
+
+immersiveintegration.config.meDenseTransformerPowerDrain=ME Dense Transformer Power Drain
+immersiveintegration.config.desc.meDenseTransformerPowerDrain=How much power to drain per dense transformer in AE/t
+
+immersiveintegration.config.meWireConnectorDrain=ME Wire Connector Power Drain
+immersiveintegration.config.desc.meWireConnectorDrain=How much power to drain per connector in AE/t
+
+immersiveintegration.config.meDenseWireConnectorDrain=ME Dense Wire Connector Power Drain
+immersiveintegration.config.desc.meDenseWireConnectorDrain=How much power to drain per dense connector in AE/t
+
+immersiveintegration.config.enableTinkers=Enable Tinkers' Construct Integration
+immersiveintegration.config.desc.enableTinkers=Allows you to attach IE capacitors to tools
+
+immersiveintegration.config.verboseLogging=Verbose Logging
+immersiveintegration.config.desc.verboseLogging=Logs more info to the console. Useful for debugging.

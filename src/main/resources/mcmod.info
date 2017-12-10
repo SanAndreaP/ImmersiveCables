@@ -1,0 +1,19 @@
+[
+  {
+    "modid" : "immersiveintegrationrebirth",
+    "name" : "Immersive Integration Rebirth",
+    "version": "0.8.0-alpha.1",
+    "mcversion": "1.10.2",
+    "authorList": [
+      "UnwrittenFun",
+      "SanAndreasP"
+    ],
+    "description": "Integrates IE with other mods, as well as some useful addition to IE itself",
+    "url" : "https://github.com/SanAndreasP/ImmersiveIntegrationRebirth",
+    "updateUrl" : "",
+    "logoFile" : "",
+    "parent" : "",
+    "screenshots": [
+    ]
+  }
+]

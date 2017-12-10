@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "immersiveintegrationrebirth:blocks/fluix_coil_dense_top",
+        "side": "immersiveintegrationrebirth:blocks/fluix_coil_dense"
+    }
+}

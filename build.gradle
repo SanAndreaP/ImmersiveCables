@@ -1,0 +1,122 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+apply plugin: 'idea'
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+    project {
+        languageLevel = '1.8' //due to a bug in gradle or IDEA, this doesn't work :(
+    }
+}
+
+task dlImmersiveEngineering(type: LibDownloader) {
+    sourceUrl = 'https://minecraft.curseforge.com/projects/immersive-engineering/files/2433156/download'
+    target = file('libs/ImmEngineering.jar')
+}
+
+task dlAppliedEnergistics(type: LibDownloader) {
+    sourceUrl = 'http://ae-mod.info/builds/appliedenergistics2-rv4-stable-1-api.jar'
+    target = file('libs/AppEnergistics.jar')
+}
+
+setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics
+setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics
+
+version = "1.10.2-0.8.0-alpha.1"
+group = "de.sanandrew.mods"
+archivesBaseName = "ImmersiveIntegrationRebirth"
+
+sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = "1.10.2-12.18.3.2511"
+    runDir = "run"
+    mappings = "snapshot_20170716"
+}
+
+repositories {
+  maven {
+    url = "http://dvs1.progwml6.com/files/maven"
+  }
+}
+
+dependencies {
+  deobfCompile "mezz.jei:jei_1.10.2:3.14.7.420:api"
+  runtime "mezz.jei:jei_1.10.2:3.14.7.420"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+sourceJar {
+    from sourceSets.main.java
+    appendix = 'src'
+    archiveName = "${baseName}-${version}-${appendix}.jar"
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    appendix = 'deobf'
+    archiveName = "${baseName}-${version}-${appendix}.jar"
+    manifest {
+        attributes 'FMLAT': 'turretmodrebirth_at.cfg'
+    }
+}
+
+configurations {
+//    deployDev
+}
+
+artifacts {
+    archives deobfJar
+    archives sourceJar
+    archives jar
+//    deployDev deobfJar
+}
+
+project.ext {
+    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/"
+}
+
+class LibDownloader extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+       ant.get(src: sourceUrl, dest: target)
+    }
+}
