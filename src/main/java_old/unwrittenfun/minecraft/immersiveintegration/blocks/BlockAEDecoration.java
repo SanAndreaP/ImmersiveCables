@@ -1,4 +1,4 @@
-package de.sanandrew.mods.immersiveintegration.block;
+package de.sanandrew.mods.immersivewiring.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

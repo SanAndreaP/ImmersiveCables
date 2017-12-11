@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "immersivewiring:blocks/fluix_coil_top",
+        "side": "immersivewiring:blocks/fluix_coil"
+    }
+}

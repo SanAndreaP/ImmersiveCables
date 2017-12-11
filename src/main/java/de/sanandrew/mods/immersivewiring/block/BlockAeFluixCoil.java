@@ -1,6 +1,6 @@
-package de.sanandrew.mods.immersiveintegration.block;
+package de.sanandrew.mods.immersivewiring.block;
 
-import de.sanandrew.mods.immersiveintegration.util.IIConstants;
+import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,14 +8,9 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -28,9 +23,9 @@ public class BlockAeFluixCoil
         super(Material.IRON);
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
-        this.setUnlocalizedName(IIConstants.ID + ":fluix_coil");
+        this.setUnlocalizedName(IWConstants.ID + ":fluix_coil");
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Coil.FLUIX_COIL));
-        this.setRegistryName(IIConstants.ID, "fluix_coil");
+        this.setRegistryName(IWConstants.ID, "fluix_coil");
         this.setCreativeTab(CreativeTabs.REDSTONE);
 //        setCreativeTab(ImmersiveIntegration.iiCreativeTab);
     }
@@ -52,11 +47,6 @@ public class BlockAeFluixCoil
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
-        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, stack);
-    }
-
-    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, TYPE);
     }
@@ -68,12 +58,14 @@ public class BlockAeFluixCoil
         }
     }
 
-    public enum Coil implements IStringSerializable
+    public enum Coil
+            implements IStringSerializable
     {
         FLUIX_COIL, FLUIX_COIL_DENSE;
 
         public static final Coil[] VALUES = values();
 
+        @Override
         public String getName() {
             return this.name().toLowerCase();
         }
@@ -81,22 +73,6 @@ public class BlockAeFluixCoil
         @Override
         public String toString() {
             return this.getName();
-        }
-    }
-
-    public static final class ItemBlockCoil
-            extends ItemBlock
-    {
-        public ItemBlockCoil(Block block) {
-            super(block);
-            this.setHasSubtypes(true);
-            this.setMaxDamage(0);
-            this.setRegistryName(block.getRegistryName());
-        }
-
-        @Override
-        public int getMetadata(int damage) {
-            return damage;
         }
     }
 }

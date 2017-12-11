@@ -6,11 +6,13 @@
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  * *****************************************************************************************************************
  */
-package de.sanandrew.mods.immersiveintegration.client.util;
+package de.sanandrew.mods.immersivewiring.client.util;
 
-import de.sanandrew.mods.immersiveintegration.block.BlockAeFluixCoil;
-import de.sanandrew.mods.immersiveintegration.block.BlockRegistry;
-import de.sanandrew.mods.immersiveintegration.util.IIConstants;
+import blusunrize.immersiveengineering.client.render.TileRenderImmersiveConnectable;
+import de.sanandrew.mods.immersivewiring.block.BlockAeFluixCoil;
+import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
+import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
+import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,15 +37,15 @@ public final class ModelRegistry
 
         Item fluixCoilItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
         if( fluixCoilItem != null ) {
-            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 0, new ModelResourceLocation(IIConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL, "inventory"));
-            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 1, new ModelResourceLocation(IIConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 0, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 1, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE, "inventory"));
         }
 //        setCustomMeshModel(ItemRegistry.TURRET_PLACER, new MeshDefUUID.Turret());
 //        setCustomMeshModel(ItemRegistry.TURRET_AMMO, new MeshDefUUID.Ammo());
 //        setCustomMeshModel(ItemRegistry.TURRET_UPGRADE, new MeshDefUUID.Upgrade());
 //        setCustomMeshModel(ItemRegistry.REPAIR_KIT, new MeshDefUUID.Repkit());
 
-//        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTurretAssembly.class, new RenderTurretAssembly());
+//        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMETransformer.class, new TileRenderImmersiveConnectable());
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElectrolyteGenerator.class, new RenderElectrolyteGenerator());
     }
 
@@ -50,8 +53,8 @@ public final class ModelRegistry
         Item fluixCoilItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
         if( fluixCoilItem != null ) {
             ModelBakery.registerItemVariants(fluixCoilItem,
-                                             new ResourceLocation(IIConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL.getName()),
-                                             new ResourceLocation(IIConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE.getName()));
+                                             new ResourceLocation(IWConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL.getName()),
+                                             new ResourceLocation(IWConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE.getName()));
 
         }
 //        setCustomMeshModel(ItemRegistry.TURRET_PLACER, new MeshDefUUID.Turret());

@@ -23,17 +23,22 @@ idea {
 }
 
 task dlImmersiveEngineering(type: LibDownloader) {
-    sourceUrl = 'https://minecraft.curseforge.com/projects/immersive-engineering/files/2433156/download'
+    sourceUrl = 'https://minecraft.curseforge.com/projects/immersive-engineering/files/2435559/download'
     target = file('libs/ImmEngineering.jar')
 }
 
 task dlAppliedEnergistics(type: LibDownloader) {
-    sourceUrl = 'http://ae-mod.info/builds/appliedenergistics2-rv4-stable-1-api.jar'
+    sourceUrl = 'https://minecraft.curseforge.com/projects/applied-energistics-2/files/2454983/download'
     target = file('libs/AppEnergistics.jar')
 }
 
-setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics
-setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics
+task dlSanLib(type: LibDownloader) {
+    sourceUrl = 'https://minecraft.curseforge.com/projects/sanlib/files/2508037/download'
+    target = file('libs/SanLib.jar')
+}
+
+setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib
+setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib
 
 version = "1.10.2-0.8.0-alpha.1"
 group = "de.sanandrew.mods"
