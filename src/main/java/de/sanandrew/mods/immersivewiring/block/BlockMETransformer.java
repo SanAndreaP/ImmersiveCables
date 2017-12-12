@@ -8,18 +8,16 @@ package de.sanandrew.mods.immersivewiring.block;
 
 import appeng.api.AEApi;
 import appeng.api.util.AEPartLocation;
-import blusunrize.immersiveengineering.api.IEProperties;
 import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import blusunrize.immersiveengineering.common.IESaveData;
 import blusunrize.immersiveengineering.common.util.Utils;
 import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -35,14 +33,11 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 
 import java.util.List;
 
 public class BlockMETransformer
-        extends Block
+        extends BlockDirectional
 {
     public static final PropertyEnum<TransformerType> TYPE = PropertyEnum.create("type", TransformerType.class);
 
@@ -51,7 +46,7 @@ public class BlockMETransformer
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
         this.setUnlocalizedName(IWConstants.ID + ":me_transformer");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, TransformerType.REGULAR));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, TransformerType.REGULAR).withProperty(FACING, EnumFacing.UP));
         this.setRegistryName(IWConstants.ID, "me_transformer");
         this.setCreativeTab(CreativeTabs.REDSTONE);
     }
@@ -74,37 +69,18 @@ public class BlockMETransformer
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
-        return super.getStateFromMeta(meta).withProperty(TYPE, meta >= 0 && meta < TransformerType.VALUES.length ? TransformerType.VALUES[meta] : TransformerType.REGULAR);
+        return this.getDefaultState().withProperty(TYPE, TransformerType.VALUES[meta & 1])
+                                     .withProperty(FACING, EnumFacing.VALUES[(meta >> 1) & 7]);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(TYPE).ordinal();
+        return (state.getValue(TYPE).ordinal() & 1) | ((state.getValue(FACING).getIndex() & 7) << 1);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[]{TYPE}, new IUnlistedProperty[0]);
-    }
-
-    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState state2 = super.getExtendedState(state, world, pos);
-        if (state2 instanceof IExtendedBlockState ) {
-            IExtendedBlockState ext = (IExtendedBlockState)state;
-            TileEntity te = world.getTileEntity(pos);
-            if (!(te instanceof TileEntityImmersiveConnectable)) {
-                return state;
-            }
-
-            state = ext.withProperty(IEProperties.CONNECTIONS, ((TileEntityImmersiveConnectable)te).genConnBlockstate());
-        }
-
-        return state;
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return super.canPlaceBlockAt(world, pos) && world.getBlockState(pos.up(1)).getBlock().isReplaceable(world, pos.up(1));
+        return new BlockStateContainer(this, TYPE, FACING);
     }
 
     @Override
@@ -136,7 +112,12 @@ public class BlockMETransformer
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+        return EnumBlockRenderType.INVISIBLE;
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
+        return getStateFromMeta(meta).withProperty(FACING, facing);
     }
 
     @Override

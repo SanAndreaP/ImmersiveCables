@@ -8,11 +8,15 @@
  */
 package de.sanandrew.mods.immersivewiring.client.util;
 
-import blusunrize.immersiveengineering.client.render.TileRenderImmersiveConnectable;
+import blusunrize.immersiveengineering.api.energy.wires.WireType;
+import blusunrize.immersiveengineering.common.items.ItemWireCoil;
 import de.sanandrew.mods.immersivewiring.block.BlockAeFluixCoil;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
+import de.sanandrew.mods.immersivewiring.client.render.RenderTileIWConnectable;
+import de.sanandrew.mods.immersivewiring.item.ItemRegistry;
 import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
+import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -40,12 +44,15 @@ public final class ModelRegistry
             ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 0, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL, "inventory"));
             ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 1, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE, "inventory"));
         }
+
+        ModelLoader.setCustomModelResourceLocation(ItemRegistry.WIRE_COIL, 0, new ModelResourceLocation(IWConstants.ID + ":wire_" + WireRegistry.Wire.FLUIX, "inventory"));
+        ModelLoader.setCustomModelResourceLocation(ItemRegistry.WIRE_COIL, 1, new ModelResourceLocation(IWConstants.ID + ":wire_" + WireRegistry.Wire.FLUIX_DENSE, "inventory"));
 //        setCustomMeshModel(ItemRegistry.TURRET_PLACER, new MeshDefUUID.Turret());
 //        setCustomMeshModel(ItemRegistry.TURRET_AMMO, new MeshDefUUID.Ammo());
 //        setCustomMeshModel(ItemRegistry.TURRET_UPGRADE, new MeshDefUUID.Upgrade());
 //        setCustomMeshModel(ItemRegistry.REPAIR_KIT, new MeshDefUUID.Repkit());
 
-//        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMETransformer.class, new TileRenderImmersiveConnectable());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMETransformer.class, new RenderTileIWConnectable());
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElectrolyteGenerator.class, new RenderElectrolyteGenerator());
     }
 
@@ -57,6 +64,10 @@ public final class ModelRegistry
                                              new ResourceLocation(IWConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE.getName()));
 
         }
+
+        ModelBakery.registerItemVariants(ItemRegistry.WIRE_COIL,
+                                         new ResourceLocation(IWConstants.ID, "wire_" + WireRegistry.Wire.FLUIX),
+                                         new ResourceLocation(IWConstants.ID, "wire_" + WireRegistry.Wire.FLUIX_DENSE));
 //        setCustomMeshModel(ItemRegistry.TURRET_PLACER, new MeshDefUUID.Turret());
 //        setCustomMeshModel(ItemRegistry.TURRET_AMMO, new MeshDefUUID.Ammo());
 //        setCustomMeshModel(ItemRegistry.TURRET_UPGRADE, new MeshDefUUID.Upgrade());

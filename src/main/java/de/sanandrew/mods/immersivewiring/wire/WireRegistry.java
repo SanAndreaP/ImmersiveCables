@@ -28,5 +28,10 @@ public final class WireRegistry
         public WireType getType() {
             return this.type;
         }
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
     }
 }

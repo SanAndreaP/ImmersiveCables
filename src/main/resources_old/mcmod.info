@@ -8,7 +8,7 @@
       "UnwrittenFun",
       "SanAndreasP"
     ],
-    "description": "Adds IE-style wires and blocks that integrate with other mods",
+    "description": "Integrates IE with other mods, as well as some useful addition to IE itself",
     "url" : "https://github.com/SanAndreasP/ImmersiveWiring",
     "updateUrl" : "",
     "logoFile" : "",

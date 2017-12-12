@@ -1,5 +1,6 @@
 package de.sanandrew.mods.immersivewiring.wire;
 
+import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import de.sanandrew.mods.immersivewiring.item.ItemRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -14,6 +15,11 @@ public class FluixDenseWire
     @Override
     public int getMaxLength() {
         return 32;//TODO: add ImmersiveIntegration.cfg.denseWireRange;
+    }
+
+    @Override
+    public int getColour(ImmersiveNetHandler.Connection connection) {
+        return 0x5C1682;
     }
 
     @Override

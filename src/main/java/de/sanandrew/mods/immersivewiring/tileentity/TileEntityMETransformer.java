@@ -29,6 +29,7 @@ import de.sanandrew.mods.immersivewiring.block.BlockMETransformer;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -88,7 +89,7 @@ public class TileEntityMETransformer
 
     @Override
     public EnumSet<EnumFacing> getConnectableSides() {
-        return EnumSet.range(EnumFacing.DOWN, EnumFacing.EAST);
+        return EnumSet.of(this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING).getOpposite());
     }
 
     @Override
@@ -103,7 +104,7 @@ public class TileEntityMETransformer
 
     @Override
     public ItemStack getMachineRepresentation() {
-        return new ItemStack(BlockRegistry.ME_TRANSFORMER, 1, this.getBlockMetadata());
+        return new ItemStack(BlockRegistry.ME_TRANSFORMER, 1, this.getBlockMetadata() & 1);
     }
 
     @Override
@@ -158,12 +159,14 @@ public class TileEntityMETransformer
 
     @Override
     public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        return new Vec3d(0.5D, 1.2D, 0.5D);
+        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
+        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.5D, 0.5D + facing.getFrontOffsetY() * 0.5D, 0.5D + facing.getFrontOffsetZ() * 0.5D);
     }
 
     @Override
     public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
-        return new Vec3d(0.5D, 1.1D, 0.5D);
+        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
+        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.4D, 0.5D + facing.getFrontOffsetY() * 0.4D, 0.5D + facing.getFrontOffsetZ() * 0.4D);
     }
 
     @Override
@@ -183,6 +186,11 @@ public class TileEntityMETransformer
                 this.connectTo(opposite);
             }
         }
+    }
+
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
     }
 
     @Override
@@ -233,7 +241,7 @@ public class TileEntityMETransformer
     }
 
     public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ(), this.pos.getX() + 1, this.pos.getY() + 2, this.pos.getZ() + 1);
+        return INFINITE_EXTENT_AABB;
     }
 
     @Override
