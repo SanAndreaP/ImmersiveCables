@@ -25,7 +25,7 @@ import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.block.BlockMETransformer;
+import de.sanandrew.mods.immersivewiring.block.BlockTransformerFluix;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
@@ -117,7 +117,7 @@ public class TileEntityMETransformer
 
     @Override
     public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
-        return this.world.getBlockState(this.pos).getValue(BlockMETransformer.TYPE) == BlockMETransformer.TransformerType.DENSE ? AECableType.DENSE : AECableType.SMART;
+        return this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.TransformerType.DENSE ? AECableType.DENSE : AECableType.SMART;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class TileEntityMETransformer
 
     @Override
     public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        boolean isDense = this.world.getBlockState(this.pos).getValue(BlockMETransformer.TYPE) == BlockMETransformer.TransformerType.DENSE;
+        boolean isDense = this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.TransformerType.DENSE;
         return (isDense ? cableType == WireRegistry.Wire.FLUIX_DENSE.getType() : cableType == WireRegistry.Wire.FLUIX.getType()) && limitType == null;
     }
 

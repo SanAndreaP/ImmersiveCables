@@ -8,10 +8,9 @@
  */
 package de.sanandrew.mods.immersivewiring.client.util;
 
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
-import blusunrize.immersiveengineering.common.items.ItemWireCoil;
 import de.sanandrew.mods.immersivewiring.block.BlockAeFluixCoil;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
+import de.sanandrew.mods.immersivewiring.block.BlockRelayFluix;
 import de.sanandrew.mods.immersivewiring.client.render.RenderTileIWConnectable;
 import de.sanandrew.mods.immersivewiring.item.ItemRegistry;
 import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
@@ -39,10 +38,15 @@ public final class ModelRegistry
     public static void registerModels(ModelRegistryEvent event) throws Exception {
 //        setStandardModel(BlockRegistry.FLUX_COIL);
 
-        Item fluixCoilItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
-        if( fluixCoilItem != null ) {
-            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 0, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL, "inventory"));
-            ModelLoader.setCustomModelResourceLocation(fluixCoilItem, 1, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE, "inventory"));
+        Item blockItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
+        if( blockItem != null ) {
+            ModelLoader.setCustomModelResourceLocation(blockItem, 0, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 1, new ModelResourceLocation(IWConstants.ID + ':' + BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE, "inventory"));
+        }
+        blockItem = Item.getItemFromBlock(BlockRegistry.RELAY_FLUIX);
+        if( blockItem != null ) {
+            ModelLoader.setCustomModelResourceLocation(blockItem, 0, new ModelResourceLocation(IWConstants.ID + ":relay_" + BlockRelayFluix.Type.FLUIX, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 1, new ModelResourceLocation(IWConstants.ID + ":relay_" + BlockRelayFluix.Type.FLUIX_DENSE, "inventory"));
         }
 
         ModelLoader.setCustomModelResourceLocation(ItemRegistry.WIRE_COIL, 0, new ModelResourceLocation(IWConstants.ID + ":wire_" + WireRegistry.Wire.FLUIX, "inventory"));
@@ -57,12 +61,17 @@ public final class ModelRegistry
     }
 
     public static void registerModelPre112() {
-        Item fluixCoilItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
-        if( fluixCoilItem != null ) {
-            ModelBakery.registerItemVariants(fluixCoilItem,
+        Item blockItem = Item.getItemFromBlock(BlockRegistry.FLUIX_COIL);
+        if( blockItem != null ) {
+            ModelBakery.registerItemVariants(blockItem,
                                              new ResourceLocation(IWConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL.getName()),
                                              new ResourceLocation(IWConstants.ID, BlockAeFluixCoil.Coil.FLUIX_COIL_DENSE.getName()));
-
+        }
+        blockItem = Item.getItemFromBlock(BlockRegistry.RELAY_FLUIX);
+        if( blockItem != null ) {
+            ModelBakery.registerItemVariants(blockItem,
+                                             new ResourceLocation(IWConstants.ID, "relay_" + BlockRelayFluix.Type.FLUIX.getName()),
+                                             new ResourceLocation(IWConstants.ID, "relay_" + BlockRelayFluix.Type.FLUIX_DENSE.getName()));
         }
 
         ModelBakery.registerItemVariants(ItemRegistry.WIRE_COIL,

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "facing=up,type=fluix": {
+      "model": "immersivewiring:relay_fluix"
+    },
+    "facing=down,type=fluix": {
+      "model": "immersivewiring:relay_fluix",
+      "x": 180
+    },
+    "facing=north,type=fluix": {
+      "model": "immersivewiring:relay_fluix",
+      "x": 90
+    },
+    "facing=south,type=fluix": {
+      "model": "immersivewiring:relay_fluix",
+      "x": -90
+    },
+    "facing=east,type=fluix": {
+      "model": "immersivewiring:relay_fluix",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,type=fluix": {
+      "model": "immersivewiring:relay_fluix",
+      "x": -90,
+      "y": 90
+    },
+    "facing=up,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix"
+    },
+    "facing=down,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix",
+      "x": 180
+    },
+    "facing=north,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix",
+      "x": -90
+    },
+    "facing=south,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix",
+      "x": 90
+    },
+    "facing=east,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix",
+      "z": -90
+    },
+    "facing=west,type=fluix_dense": {
+      "model": "immersivewiring:relay_fluix",
+      "z": 90
+    }
+  }
+}

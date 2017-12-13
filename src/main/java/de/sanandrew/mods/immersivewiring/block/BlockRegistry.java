@@ -25,11 +25,12 @@ import org.apache.logging.log4j.Level;
 public final class BlockRegistry
 {
     public static final BlockAeFluixCoil FLUIX_COIL = new BlockAeFluixCoil();
-    public static final BlockMETransformer ME_TRANSFORMER = new BlockMETransformer();
+    public static final BlockRelayFluix RELAY_FLUIX = new BlockRelayFluix();
+    public static final BlockTransformerFluix ME_TRANSFORMER = new BlockTransformerFluix();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().registerAll(FLUIX_COIL, ME_TRANSFORMER);
+        event.getRegistry().registerAll(FLUIX_COIL, ME_TRANSFORMER, RELAY_FLUIX);
 //
         GameRegistry.registerTileEntity(TileEntityMETransformer.class, IWConstants.ID + ":te_me_transformer");
 //        GameRegistry.registerTileEntity(TileEntityElectrolyteGenerator.class, TmrConstants.ID + ":te_potato_generator");
@@ -39,6 +40,7 @@ public final class BlockRegistry
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().register(new ItemBlockMeta(FLUIX_COIL));
         event.getRegistry().register(new ItemBlockMeta(ME_TRANSFORMER));
+        event.getRegistry().register(new ItemBlockMeta(RELAY_FLUIX));
     }
 
     private static void registerBlockItem(RegistryEvent.Register<Item> event, Block block) {

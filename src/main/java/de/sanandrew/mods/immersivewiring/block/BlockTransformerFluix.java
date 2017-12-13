@@ -36,12 +36,12 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockMETransformer
+public class BlockTransformerFluix
         extends BlockDirectional
 {
     public static final PropertyEnum<TransformerType> TYPE = PropertyEnum.create("type", TransformerType.class);
 
-    public BlockMETransformer() {
+    public BlockTransformerFluix() {
         super(Material.IRON);
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
