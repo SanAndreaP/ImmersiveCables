@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "type=fluix": {
+      "model": "immersivewiring:coil_block_fluix"
+    },
+    "type=fluix_dense": {
+      "model": "immersivewiring:coil_block_fluix_dense"
+    }
+  }
+}

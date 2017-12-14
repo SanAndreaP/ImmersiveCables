@@ -12,7 +12,8 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.IESaveData;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
+import de.sanandrew.mods.immersivewiring.tileentity.TileEntityRelayFluix;
+import de.sanandrew.mods.immersivewiring.tileentity.TileEntityTransformerFluix;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
@@ -52,12 +53,12 @@ public class BlockRelayFluix
 
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return false;
+        return true;
     }
 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return null;//new TileEntityMETransformer();
+        return new TileEntityRelayFluix();
     }
 
     @Override
@@ -86,7 +87,7 @@ public class BlockRelayFluix
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if( !worldIn.isRemote ) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if( tile instanceof TileEntityMETransformer ) {
+            if( tile instanceof TileEntityRelayFluix ) {
                 ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(Utils.toCC(tile), worldIn, new TargetingInfo(EnumFacing.UP, 0.0F, 0.0F, 0.0F));
                 IESaveData.setDirty(worldIn.provider.getDimension());
             }
@@ -122,9 +123,9 @@ public class BlockRelayFluix
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if( !world.isRemote && placer instanceof EntityPlayer ) {
-            TileEntity transformer = world.getTileEntity(pos);
-            if( transformer instanceof TileEntityMETransformer ) {
-                ((TileEntityMETransformer) transformer).getGridNode(AEPartLocation.INTERNAL).setPlayerID(AEApi.instance().registries().players().getID((EntityPlayer) placer));
+            TileEntity relay = world.getTileEntity(pos);
+            if( relay instanceof TileEntityRelayFluix ) {
+                ((TileEntityRelayFluix) relay).getGridNode(AEPartLocation.INTERNAL).setPlayerID(AEApi.instance().registries().players().getID((EntityPlayer) placer));
             }
         }
     }

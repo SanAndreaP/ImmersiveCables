@@ -12,9 +12,8 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.IESaveData;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
+import de.sanandrew.mods.immersivewiring.tileentity.TileEntityTransformerFluix;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -39,15 +38,15 @@ import java.util.List;
 public class BlockTransformerFluix
         extends BlockDirectional
 {
-    public static final PropertyEnum<TransformerType> TYPE = PropertyEnum.create("type", TransformerType.class);
+    public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
     public BlockTransformerFluix() {
         super(Material.IRON);
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
-        this.setUnlocalizedName(IWConstants.ID + ":me_transformer");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, TransformerType.REGULAR).withProperty(FACING, EnumFacing.UP));
-        this.setRegistryName(IWConstants.ID, "me_transformer");
+        this.setUnlocalizedName(IWConstants.ID + ":transformer_fluix");
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Type.REGULAR).withProperty(FACING, EnumFacing.UP));
+        this.setRegistryName(IWConstants.ID, "transformer_fluix");
         this.setCreativeTab(CreativeTabs.REDSTONE);
     }
 
@@ -58,7 +57,7 @@ public class BlockTransformerFluix
 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileEntityMETransformer();
+        return new TileEntityTransformerFluix();
     }
 
     @Override
@@ -69,7 +68,7 @@ public class BlockTransformerFluix
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(TYPE, TransformerType.VALUES[meta & 1])
+        return this.getDefaultState().withProperty(TYPE, Type.VALUES[meta & 1])
                                      .withProperty(FACING, EnumFacing.VALUES[(meta >> 1) & 7]);
     }
 
@@ -87,7 +86,7 @@ public class BlockTransformerFluix
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if( !worldIn.isRemote ) {
             TileEntity tile = worldIn.getTileEntity(pos);
-            if( tile instanceof TileEntityMETransformer ) {
+            if( tile instanceof TileEntityTransformerFluix ) {
                 ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(Utils.toCC(tile), worldIn, new TargetingInfo(EnumFacing.UP, 0.0F, 0.0F, 0.0F));
                 IESaveData.setDirty(worldIn.provider.getDimension());
             }
@@ -124,25 +123,25 @@ public class BlockTransformerFluix
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if( !world.isRemote && placer instanceof EntityPlayer ) {
             TileEntity transformer = world.getTileEntity(pos);
-            if( transformer instanceof TileEntityMETransformer ) {
-                ((TileEntityMETransformer) transformer).getGridNode(AEPartLocation.INTERNAL).setPlayerID(AEApi.instance().registries().players().getID((EntityPlayer) placer));
+            if( transformer instanceof TileEntityTransformerFluix ) {
+                ((TileEntityTransformerFluix) transformer).getGridNode(AEPartLocation.INTERNAL).setPlayerID(AEApi.instance().registries().players().getID((EntityPlayer) placer));
             }
         }
     }
 
     @Override
     public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
-        for( int i = 0; i < TransformerType.VALUES.length; i++ ) {
+        for( int i = 0; i < Type.VALUES.length; i++ ) {
             list.add(new ItemStack(item, 1, i));
         }
     }
 
-    public enum TransformerType
+    public enum Type
             implements IStringSerializable
     {
         REGULAR, DENSE;
 
-        public static final TransformerType[] VALUES = values();
+        public static final Type[] VALUES = values();
 
         @Override
         public String getName() {

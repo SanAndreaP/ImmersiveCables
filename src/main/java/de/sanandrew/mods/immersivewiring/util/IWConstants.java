@@ -17,4 +17,6 @@ public final class IWConstants
     public static final String CHANNEL = "ImmIntegrationNWCH";
     public static final String NAME = "Immersive Integration Rebirth";
     public static final String DEPENDENCIES = "required-after:Forge@[12.18.3.2511,];required-after:sanlib@[1.3.0,]";
+
+    public static final String COMPAT_APPLIEDENERGISTICS = "appliedenergistics2";
 }

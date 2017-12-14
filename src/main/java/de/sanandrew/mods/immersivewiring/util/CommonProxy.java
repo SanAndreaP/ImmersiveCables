@@ -6,11 +6,19 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivewiring.util;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class CommonProxy
 {
     public void init(FMLInitializationEvent event) {
+
+    }
+
+    public void sendTryUseItemOnBlock(BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 
     }
 }

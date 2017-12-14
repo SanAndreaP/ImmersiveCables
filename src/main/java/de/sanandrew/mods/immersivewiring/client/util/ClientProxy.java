@@ -7,6 +7,11 @@
 package de.sanandrew.mods.immersivewiring.client.util;
 
 import de.sanandrew.mods.immersivewiring.util.CommonProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class ClientProxy
@@ -17,5 +22,11 @@ public class ClientProxy
         super.init(event);
 
         ModelRegistry.registerModelPre112();
+    }
+
+    @Override
+    @SuppressWarnings("ConstantConditions")
+    public void sendTryUseItemOnBlock(BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, side, hand, hitX, hitY, hitZ));
     }
 }

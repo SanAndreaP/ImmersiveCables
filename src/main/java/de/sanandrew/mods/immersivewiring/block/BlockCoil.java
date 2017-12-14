@@ -14,20 +14,19 @@ import net.minecraft.util.IStringSerializable;
 
 import java.util.List;
 
-public class BlockAeFluixCoil
+public class BlockCoil
         extends Block
 {
-    public static final PropertyEnum<Coil> TYPE = PropertyEnum.create("type", Coil.class);
+    public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
-    public BlockAeFluixCoil() {
+    public BlockCoil() {
         super(Material.IRON);
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
-        this.setUnlocalizedName(IWConstants.ID + ":fluix_coil");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Coil.FLUIX_COIL));
-        this.setRegistryName(IWConstants.ID, "fluix_coil");
+        this.setUnlocalizedName(IWConstants.ID + ":coil_block");
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Type.FLUIX));
+        this.setRegistryName(IWConstants.ID, "coil_block");
         this.setCreativeTab(CreativeTabs.REDSTONE);
-//        setCreativeTab(ImmersiveIntegration.iiCreativeTab);
     }
 
     @Override
@@ -38,7 +37,7 @@ public class BlockAeFluixCoil
     @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
-        return super.getStateFromMeta(meta).withProperty(TYPE, meta >= 0 && meta < Coil.VALUES.length ? Coil.VALUES[meta] : Coil.FLUIX_COIL);
+        return super.getStateFromMeta(meta).withProperty(TYPE, Type.VALUES[meta >= 0 && meta < Type.VALUES.length ? meta : 0]);
     }
 
     @Override
@@ -53,17 +52,17 @@ public class BlockAeFluixCoil
 
     @Override
     public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
-        for( int i = 0; i < Coil.VALUES.length; i++ ) {
+        for( int i = 0; i < Type.VALUES.length; i++ ) {
             list.add(new ItemStack(item, 1, i));
         }
     }
 
-    public enum Coil
+    public enum Type
             implements IStringSerializable
     {
-        FLUIX_COIL, FLUIX_COIL_DENSE;
+        FLUIX, FLUIX_DENSE;
 
-        public static final Coil[] VALUES = values();
+        public static final Type[] VALUES = values();
 
         @Override
         public String getName() {

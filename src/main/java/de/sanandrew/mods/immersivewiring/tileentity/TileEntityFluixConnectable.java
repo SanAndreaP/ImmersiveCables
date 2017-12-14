@@ -15,7 +15,6 @@ import appeng.api.networking.IGridBlock;
 import appeng.api.networking.IGridConnection;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
-import appeng.api.util.AECableType;
 import appeng.api.util.AEColor;
 import appeng.api.util.AEPartLocation;
 import appeng.api.util.DimensionalCoord;
@@ -25,42 +24,26 @@ import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.block.BlockTransformerFluix;
-import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
-import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
-import net.minecraft.block.BlockDirectional;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.Level;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class TileEntityMETransformer
+public abstract class TileEntityFluixConnectable
         extends TileEntityImmersiveConnectable
         implements IGridHost, IGridBlock, ITickable
 {
     public IGridNode gridNode;
-    public IGridConnection connection;
+    public ArrayList<IGridConnection> connections = new ArrayList<>();
 
     private boolean loaded = false;
-
-    @Override
-    public double getIdlePowerUsage() {
-        return 15;//TODO: add ImmersiveIntegration.cfg.meTransformerPowerDrain;
-    }
-
-    @Override
-    public EnumSet<GridFlags> getFlags() {
-        return EnumSet.noneOf(GridFlags.class);
-    }
 
     @Override
     public boolean isWorldAccessible() {
@@ -88,11 +71,6 @@ public class TileEntityMETransformer
     }
 
     @Override
-    public EnumSet<EnumFacing> getConnectableSides() {
-        return EnumSet.of(this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING).getOpposite());
-    }
-
-    @Override
     public IGridHost getMachine() {
         return this;
     }
@@ -100,11 +78,6 @@ public class TileEntityMETransformer
     @Override
     public void gridChanged() {
 
-    }
-
-    @Override
-    public ItemStack getMachineRepresentation() {
-        return new ItemStack(BlockRegistry.ME_TRANSFORMER, 1, this.getBlockMetadata() & 1);
     }
 
     @Override
@@ -116,11 +89,6 @@ public class TileEntityMETransformer
     }
 
     @Override
-    public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
-        return this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.TransformerType.DENSE ? AECableType.DENSE : AECableType.SMART;
-    }
-
-    @Override
     public void securityBreak() {
 
     }
@@ -128,12 +96,6 @@ public class TileEntityMETransformer
     @Override
     public boolean canConnect() {
         return true;
-    }
-
-    @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        boolean isDense = this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.TransformerType.DENSE;
-        return (isDense ? cableType == WireRegistry.Wire.FLUIX_DENSE.getType() : cableType == WireRegistry.Wire.FLUIX.getType()) && limitType == null;
     }
 
     @Override
@@ -149,24 +111,24 @@ public class TileEntityMETransformer
 
     @Override
     public void removeCable(ImmersiveNetHandler.Connection connection) {
-        if( this.connection != null && !this.world.isRemote ) {
-            this.connection.destroy();
-            this.connection = null;
+        if (!this.world.isRemote) {
+            BlockPos opposite = connection.end;
+            if (opposite.equals(Utils.toCC(this))) {
+                return;
+            }
+
+            for (IGridConnection gridConnection : this.connections) {
+                DimensionalCoord locA = gridConnection.a().getGridBlock().getLocation();
+                DimensionalCoord locB = gridConnection.b().getGridBlock().getLocation();
+                if( (opposite.getX() == locA.x && opposite.getZ() == locA.z && opposite.getY() == locA.y) || (opposite.getX() == locB.x && opposite.getZ() == locB.z && opposite.getY() == locB.y)) {
+                    gridConnection.destroy();
+                    this.connections.remove(gridConnection);
+                    break;
+                }
+            }
         }
 
         super.removeCable(connection);
-    }
-
-    @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.5D, 0.5D + facing.getFrontOffsetY() * 0.5D, 0.5D + facing.getFrontOffsetZ() * 0.5D);
-    }
-
-    @Override
-    public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
-        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.4D, 0.5D + facing.getFrontOffsetY() * 0.4D, 0.5D + facing.getFrontOffsetZ() * 0.4D);
     }
 
     @Override
@@ -229,11 +191,7 @@ public class TileEntityMETransformer
             IGridNode nodeA = ((IGridHost) teOpposite).getGridNode(AEPartLocation.INTERNAL);
             IGridNode nodeB = getGridNode(AEPartLocation.INTERNAL);
             try {
-                if( this.connection != null ) {
-                    this.connection.destroy();
-                    this.connection = null;
-                }
-                this.connection = AEApi.instance().createGridConnection(nodeA, nodeB);
+                this.connections.add(AEApi.instance().createGridConnection(nodeA, nodeB));
             } catch( FailedConnection ex ) {
                 IWConstants.LOG.log(Level.DEBUG, ex.getMessage());
             }

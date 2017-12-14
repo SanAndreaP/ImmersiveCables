@@ -10,7 +10,7 @@ import blusunrize.immersiveengineering.api.ApiUtils;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.tileentity.TileEntityMETransformer;
+import de.sanandrew.mods.immersivewiring.tileentity.TileEntityFluixConnectable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -23,10 +23,10 @@ import net.minecraftforge.client.model.animation.FastTESR;
 import java.util.Set;
 
 public class RenderTileIWConnectable
-        extends FastTESR<TileEntityMETransformer>
+        extends FastTESR<TileEntityFluixConnectable>
 {
     @Override
-    public void renderTileEntityFast(TileEntityMETransformer te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer) {
+    public void renderTileEntityFast(TileEntityFluixConnectable te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer) {
         Set<ImmersiveNetHandler.Connection> outputs = ImmersiveNetHandler.INSTANCE.getConnections(te.getWorld(), Utils.toCC(te));
         if( outputs != null ) {
             Vec3d tilePosVec = new Vec3d(x, y, z);
@@ -34,8 +34,9 @@ public class RenderTileIWConnectable
                 TileEntity tileEnd = te.getWorld().getTileEntity(con.end);
                 if( tileEnd instanceof IImmersiveConnectable ) {
                     if( te.getPos().toLong() > tileEnd.getPos().toLong() ) {
-                        tessellateConnectionFast(con, te, ApiUtils.toIIC(tileEnd, te.getWorld()), con.cableType.getIcon(con), buffer, tilePosVec);
+                        tilePosVec = tilePosVec.addVector(0.0001D, 0.0001D, 0.0001D);
                     }
+                    tessellateConnectionFast(con, te, ApiUtils.toIIC(tileEnd, te.getWorld()), con.cableType.getIcon(con), buffer, tilePosVec);
                 }
             }
         }
