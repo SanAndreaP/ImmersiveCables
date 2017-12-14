@@ -170,12 +170,17 @@ public abstract class TileEntityFluixConnectable
         }
     }
 
+    public boolean isMeActive() {
+        return this.gridNode != null && this.gridNode.isActive();
+    }
+
     public void createAELink() {
         if( !this.world.isRemote ) {
             if( this.gridNode == null ) {
                 this.gridNode = AEApi.instance().createGridNode(this);
             }
             this.gridNode.updateState();
+            this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
         }
     }
 

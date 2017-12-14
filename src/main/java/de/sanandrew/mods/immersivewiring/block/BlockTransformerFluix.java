@@ -8,6 +8,7 @@ package de.sanandrew.mods.immersivewiring.block;
 
 import appeng.api.AEApi;
 import appeng.api.util.AEPartLocation;
+import appeng.client.UnlistedProperty;
 import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.IESaveData;
@@ -17,6 +18,8 @@ import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -26,12 +29,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 import java.util.List;
 
@@ -39,13 +44,14 @@ public class BlockTransformerFluix
         extends BlockDirectional
 {
     public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
+    public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockTransformerFluix() {
         super(Material.IRON);
         this.setHardness(2.5F);
         this.blockSoundType = SoundType.METAL;
         this.setUnlocalizedName(IWConstants.ID + ":transformer_fluix");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Type.REGULAR).withProperty(FACING, EnumFacing.UP));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, Type.FLUIX).withProperty(FACING, EnumFacing.UP));
         this.setRegistryName(IWConstants.ID, "transformer_fluix");
         this.setCreativeTab(CreativeTabs.REDSTONE);
     }
@@ -79,7 +85,22 @@ public class BlockTransformerFluix
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, TYPE, FACING);
+        return new BlockStateContainer(this, TYPE, FACING, ACTIVE);
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.withProperty(ACTIVE, isMeActive(world, pos));
+    }
+
+    private static boolean isMeActive(IBlockAccess world, BlockPos pos) {
+        TileEntity te = world.getTileEntity(pos);
+        return te instanceof TileEntityTransformerFluix && ((TileEntityTransformerFluix) te).isMeActive();
     }
 
     @Override
@@ -110,11 +131,6 @@ public class BlockTransformerFluix
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.INVISIBLE;
-    }
-
-    @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
         return getStateFromMeta(meta).withProperty(FACING, facing);
     }
@@ -139,7 +155,7 @@ public class BlockTransformerFluix
     public enum Type
             implements IStringSerializable
     {
-        REGULAR, DENSE;
+        FLUIX, FLUIX_DENSE;
 
         public static final Type[] VALUES = values();
 

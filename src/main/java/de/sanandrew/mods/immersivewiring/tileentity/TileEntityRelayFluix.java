@@ -17,9 +17,12 @@ import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.block.BlockRelayFluix;
 import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.EnumSet;
 
@@ -73,5 +76,10 @@ public class TileEntityRelayFluix
 
     private boolean isDense() {
         return !this.world.isAirBlock(this.pos) && this.world.getBlockState(this.pos).getValue(BlockRelayFluix.TYPE) == BlockRelayFluix.Type.FLUIX_DENSE;
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return newState.getBlock() == BlockRegistry.RELAY_FLUIX && newState.getValue(BlockRelayFluix.TYPE) == oldState.getValue(BlockRelayFluix.TYPE);
     }
 }

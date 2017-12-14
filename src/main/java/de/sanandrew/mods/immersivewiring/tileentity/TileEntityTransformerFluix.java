@@ -17,9 +17,12 @@ import de.sanandrew.mods.immersivewiring.block.BlockTransformerFluix;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.EnumSet;
 
@@ -48,7 +51,7 @@ public class TileEntityTransformerFluix
 
     @Override
     public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
-        return this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.Type.DENSE ? AECableType.DENSE : AECableType.SMART;
+        return this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.Type.FLUIX_DENSE ? AECableType.DENSE : AECableType.SMART;
     }
 
     @Override
@@ -69,6 +72,11 @@ public class TileEntityTransformerFluix
     }
 
     private boolean isDense() {
-        return !this.world.isAirBlock(this.pos) && this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.Type.DENSE;
+        return !this.world.isAirBlock(this.pos) && this.world.getBlockState(this.pos).getValue(BlockTransformerFluix.TYPE) == BlockTransformerFluix.Type.FLUIX_DENSE;
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return newState.getBlock() == BlockRegistry.TRANSFORMER_FLUIX && newState.getValue(BlockTransformerFluix.TYPE) == oldState.getValue(BlockTransformerFluix.TYPE);
     }
 }

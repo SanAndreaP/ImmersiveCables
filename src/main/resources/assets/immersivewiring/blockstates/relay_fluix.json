@@ -34,11 +34,11 @@
     },
     "facing=north,type=fluix_dense": {
       "model": "immersivewiring:relay_fluix_dense",
-      "x": -90
+      "x": 90
     },
     "facing=south,type=fluix_dense": {
       "model": "immersivewiring:relay_fluix_dense",
-      "x": 90
+      "x": -90
     },
     "facing=east,type=fluix_dense": {
       "model": "immersivewiring:relay_fluix_dense",

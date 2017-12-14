@@ -11,6 +11,7 @@ package de.sanandrew.mods.immersivewiring.client.util;
 import de.sanandrew.mods.immersivewiring.block.BlockCoil;
 import de.sanandrew.mods.immersivewiring.block.BlockRegistry;
 import de.sanandrew.mods.immersivewiring.block.BlockRelayFluix;
+import de.sanandrew.mods.immersivewiring.block.BlockTransformerFluix;
 import de.sanandrew.mods.immersivewiring.client.render.RenderTileIWConnectable;
 import de.sanandrew.mods.immersivewiring.item.ItemRegistry;
 import de.sanandrew.mods.immersivewiring.tileentity.TileEntityRelayFluix;
@@ -52,6 +53,11 @@ public final class ModelRegistry
                 put(1, new ModelResourceLocation(IWConstants.ID + ":relay_" + BlockRelayFluix.Type.FLUIX_DENSE, "inventory"));
             }});
 
+            registerModelBlockItems(BlockRegistry.TRANSFORMER_FLUIX, new HashMap<Integer, ModelResourceLocation>() {{
+                put(0, new ModelResourceLocation(IWConstants.ID + ":transformer_" + BlockTransformerFluix.Type.FLUIX, "inventory"));
+                put(1, new ModelResourceLocation(IWConstants.ID + ":transformer_" + BlockTransformerFluix.Type.FLUIX_DENSE, "inventory"));
+            }});
+
             ModelLoader.setCustomModelResourceLocation(ItemRegistry.WIRE_COIL, 0, new ModelResourceLocation(IWConstants.ID + ":wire_" + WireRegistry.Wire.FLUIX, "inventory"));
             ModelLoader.setCustomModelResourceLocation(ItemRegistry.WIRE_COIL, 1, new ModelResourceLocation(IWConstants.ID + ":wire_" + WireRegistry.Wire.FLUIX_DENSE, "inventory"));
 
@@ -72,6 +78,12 @@ public final class ModelRegistry
             if( blockItem != null ) {
                 ModelBakery.registerItemVariants(blockItem, new ResourceLocation(IWConstants.ID, "relay_" + BlockRelayFluix.Type.FLUIX.getName()),
                                                             new ResourceLocation(IWConstants.ID, "relay_" + BlockRelayFluix.Type.FLUIX_DENSE.getName()));
+            }
+
+            blockItem = Item.getItemFromBlock(BlockRegistry.TRANSFORMER_FLUIX);
+            if( blockItem != null ) {
+                ModelBakery.registerItemVariants(blockItem, new ResourceLocation(IWConstants.ID, "transformer_" + BlockTransformerFluix.Type.FLUIX.getName()),
+                                                            new ResourceLocation(IWConstants.ID, "transformer_" + BlockTransformerFluix.Type.FLUIX_DENSE.getName()));
             }
 
             ModelBakery.registerItemVariants(ItemRegistry.WIRE_COIL, new ResourceLocation(IWConstants.ID, "wire_" + WireRegistry.Wire.FLUIX),

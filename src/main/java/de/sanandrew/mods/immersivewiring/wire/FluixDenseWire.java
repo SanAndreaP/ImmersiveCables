@@ -19,7 +19,7 @@ public class FluixDenseWire
 
     @Override
     public int getColour(ImmersiveNetHandler.Connection connection) {
-        return 0x5C1682;
+        return 0x8C60AF;
     }
 
     @Override
