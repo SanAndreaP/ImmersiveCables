@@ -8,7 +8,6 @@ package de.sanandrew.mods.immersivewiring.tileentity;
 
 import appeng.api.AEApi;
 import appeng.api.exceptions.FailedConnection;
-import appeng.api.networking.GridFlags;
 import appeng.api.networking.GridNotification;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridBlock;
@@ -33,7 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Set;
 
 public abstract class TileEntityFluixConnectable
@@ -138,14 +136,15 @@ public abstract class TileEntityFluixConnectable
             this.createAELink();
 
             Set<ImmersiveNetHandler.Connection> connections = ImmersiveNetHandler.INSTANCE.getConnections(this.world, Utils.toCC(this));
-            if( connections != null && connections.iterator().hasNext() ) {
-                ImmersiveNetHandler.Connection connection = connections.iterator().next();
-                BlockPos opposite = connection.end;
-                if( opposite.equals(Utils.toCC(this)) ) {
-                    return;
-                }
+            if( connections != null ) {
+                for( ImmersiveNetHandler.Connection connection : connections ) {
+                    BlockPos opposite = connection.end;
+                    if( opposite.equals(Utils.toCC(this)) ) {
+                        continue;
+                    }
 
-                this.connectTo(opposite);
+                    this.connectTo(opposite);
+                }
             }
         }
     }
@@ -170,17 +169,12 @@ public abstract class TileEntityFluixConnectable
         }
     }
 
-    public boolean isMeActive() {
-        return this.gridNode != null && this.gridNode.isActive();
-    }
-
     public void createAELink() {
         if( !this.world.isRemote ) {
             if( this.gridNode == null ) {
                 this.gridNode = AEApi.instance().createGridNode(this);
             }
             this.gridNode.updateState();
-            this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
         }
     }
 
@@ -198,7 +192,7 @@ public abstract class TileEntityFluixConnectable
             try {
                 this.connections.add(AEApi.instance().createGridConnection(nodeA, nodeB));
             } catch( FailedConnection ex ) {
-                IWConstants.LOG.log(Level.DEBUG, ex.getMessage());
+                IWConstants.LOG.log(Level.ERROR, ex.getMessage());
             }
         }
     }

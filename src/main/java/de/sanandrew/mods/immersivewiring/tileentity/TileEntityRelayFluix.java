@@ -51,7 +51,7 @@ public class TileEntityRelayFluix
 
     @Override
     public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
-        return this.world.getBlockState(this.pos).getValue(BlockRelayFluix.TYPE) == BlockRelayFluix.Type.FLUIX_DENSE ? AECableType.DENSE : AECableType.SMART;
+        return this.isDense() ? AECableType.DENSE : AECableType.SMART;
     }
 
     @Override
@@ -62,24 +62,19 @@ public class TileEntityRelayFluix
 
     @Override
     public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
+        EnumFacing facing = !this.world.isAirBlock(this.pos) ? this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
         double offset = this.isDense() ? 0.4D : 0.2D;
         return new Vec3d(0.5D + facing.getFrontOffsetX() * offset, 0.5D + facing.getFrontOffsetY() * offset, 0.5D + facing.getFrontOffsetZ() * offset);
     }
 
     @Override
     public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
-        EnumFacing facing = this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING);
+        EnumFacing facing = !this.world.isAirBlock(this.pos) ? this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
         double offset = this.world.getBlockState(this.pos).getValue(BlockRelayFluix.TYPE) == BlockRelayFluix.Type.FLUIX_DENSE ? 0.3D : 0.1D;
         return new Vec3d(0.5D + facing.getFrontOffsetX() * offset, 0.5D + facing.getFrontOffsetY() * offset, 0.5D + facing.getFrontOffsetZ() * offset);
     }
 
     private boolean isDense() {
         return !this.world.isAirBlock(this.pos) && this.world.getBlockState(this.pos).getValue(BlockRelayFluix.TYPE) == BlockRelayFluix.Type.FLUIX_DENSE;
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return newState.getBlock() == BlockRegistry.RELAY_FLUIX && newState.getValue(BlockRelayFluix.TYPE) == oldState.getValue(BlockRelayFluix.TYPE);
     }
 }
