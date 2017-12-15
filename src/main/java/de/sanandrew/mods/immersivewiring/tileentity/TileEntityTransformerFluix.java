@@ -11,6 +11,7 @@ import appeng.api.networking.GridNotification;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.events.MENetworkChannelsChanged;
 import appeng.api.networking.events.MENetworkEventSubscribe;
+import appeng.api.networking.events.MENetworkPowerStatusChange;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
 import blusunrize.immersiveengineering.api.TargetingInfo;
@@ -98,6 +99,11 @@ public class TileEntityTransformerFluix
     }
 
     @MENetworkEventSubscribe
+    public void powerRender(MENetworkPowerStatusChange c) {
+        this.updateOnGridChange(true);
+    }
+
+    @MENetworkEventSubscribe
     public void channelUpdated(MENetworkChannelsChanged c) {
         this.updateOnGridChange(true);
     }
@@ -110,6 +116,7 @@ public class TileEntityTransformerFluix
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
         this.isActive = pkt.getNbtCompound().getBoolean("meActive");
+        this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos).withProperty(BlockTransformerFluix.ACTIVE, this.isActive), 3);
     }
 
     @Nullable
@@ -137,7 +144,7 @@ public class TileEntityTransformerFluix
     }
 
     private void updateOnGridChange(boolean force) {
-        if( !this.world.isRemote && this.gridNode != null ) {
+        if( !this.world.isRemote && this.gridNode != null && !this.world.isAirBlock(this.pos) ) {
             boolean prevActive = this.isActive;
             this.isActive = this.gridNode.isActive();
             if( prevActive != this.isActive || force ) {
