@@ -1,7 +1,8 @@
 package de.sanandrew.mods.immersivewiring.wire;
 
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import de.sanandrew.mods.immersivewiring.item.ItemRegistry;
+import de.sanandrew.mods.immersivewiring.item.ItemRegistryAE2;
+import de.sanandrew.mods.immersivewiring.util.IWConfiguration;
 import net.minecraft.item.ItemStack;
 
 public class FluixDenseWire
@@ -9,12 +10,12 @@ public class FluixDenseWire
 {
     @Override
     public String getUniqueName() {
-        return "DENSE";
+        return "AE2DENSE";
     }
 
     @Override
     public int getMaxLength() {
-        return 32;//TODO: add ImmersiveIntegration.cfg.denseWireRange;
+        return IWConfiguration.ae2DenseWireMaxLength;
     }
 
     @Override
@@ -24,7 +25,7 @@ public class FluixDenseWire
 
     @Override
     public ItemStack getWireCoil() {
-        return new ItemStack(ItemRegistry.WIRE_COIL, 1, WireRegistry.Wire.FLUIX_DENSE.ordinal());
+        return new ItemStack(ItemRegistryAE2.WIRE_COIL, 1, Wires.FLUIX_DENSE.ordinal());
     }
 
     @Override

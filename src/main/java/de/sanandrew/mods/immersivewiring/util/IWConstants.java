@@ -11,12 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 public final class IWConstants
 {
+    static final String COMPAT_APPLIEDENERGISTICS = "appliedenergistics2";
+
     public static final String ID = "immersivewiring";
     public static final Logger LOG = LogManager.getLogger(ID);
     public static final String VERSION = "0.8.0-alpha.1";
-    public static final String CHANNEL = "ImmIntegrationNWCH";
-    public static final String NAME = "Immersive Integration Rebirth";
-    public static final String DEPENDENCIES = "required-after:Forge@[12.18.3.2511,];required-after:sanlib@[1.3.0,]";
-
-    public static final String COMPAT_APPLIEDENERGISTICS = "appliedenergistics2";
+    public static final String CHANNEL = "ImmWiringNWCH";
+    public static final String NAME = "Immersive Wiring";
+    public static final String DEPENDENCIES = "required-after:Forge@[12.18.3.2511,];required-after:immersiveengineering@[0.10-61,];" +
+                                                      "after:" + COMPAT_APPLIEDENERGISTICS;
 }

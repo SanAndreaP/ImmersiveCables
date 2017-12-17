@@ -4,20 +4,23 @@
    * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
    *                http://creativecommons.org/licenses/by-nc-sa/4.0/
    *******************************************************************************************************************/
-package de.sanandrew.mods.immersivewiring.util;
+package de.sanandrew.mods.immersivewiring.wire;
 
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import appeng.api.networking.GridFlags;
+import appeng.api.util.AECableType;
+import blusunrize.immersiveengineering.api.energy.wires.WireType;
 
-public class CommonProxy
+import java.util.EnumSet;
+
+public interface IWireFluixType
 {
-    public void init(FMLInitializationEvent event) {
+    EnumSet<GridFlags> getFlags();
 
-    }
+    AECableType getCableType();
 
-    public void sendTryUseItemOnBlock(BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    WireType getWireType();
 
-    }
+    double getRelayOffset();
+
+    double getRelayHeight();
 }

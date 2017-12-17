@@ -4,16 +4,18 @@
    * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
    *                http://creativecommons.org/licenses/by-nc-sa/4.0/
    *******************************************************************************************************************/
-package de.sanandrew.mods.immersivewiring.tileentity;
+package de.sanandrew.mods.immersivewiring.tileentity.ae;
 
 import appeng.api.AEApi;
 import appeng.api.exceptions.FailedConnection;
+import appeng.api.networking.GridFlags;
 import appeng.api.networking.GridNotification;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridBlock;
 import appeng.api.networking.IGridConnection;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
+import appeng.api.util.AECableType;
 import appeng.api.util.AEColor;
 import appeng.api.util.AEPartLocation;
 import appeng.api.util.DimensionalCoord;
@@ -22,26 +24,37 @@ import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
+import blusunrize.immersiveengineering.common.blocks.IEBlockInterfaces;
 import blusunrize.immersiveengineering.common.util.Utils;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
+import de.sanandrew.mods.immersivewiring.wire.IWireFluixType;
+import net.minecraft.block.BlockDirectional;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class TileEntityFluixConnectable
         extends TileEntityImmersiveConnectable
-        implements IGridHost, IGridBlock, ITickable
+        implements IGridHost, IGridBlock, ITickable, IEBlockInterfaces.IAdvancedSelectionBounds
 {
     public IGridNode gridNode;
     public ArrayList<IGridConnection> connections = new ArrayList<>();
 
-    private boolean loaded = false;
+    protected List<AxisAlignedBB> cachedSelectionBounds;
+
+    protected boolean loaded = false;
 
     @Override
     public boolean isWorldAccessible() {
@@ -97,6 +110,26 @@ public abstract class TileEntityFluixConnectable
     }
 
     @Override
+    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
+        return cableType == this.getType().getWireType();
+    }
+
+    @Override
+    public EnumSet<GridFlags> getFlags() {
+        return this.getType().getFlags();
+    }
+
+    @Override
+    public ItemStack getMachineRepresentation() {
+        return new ItemStack(this.blockType, 1, this.getBlockMetadata() & 1);
+    }
+
+    @Override
+    public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
+        return this.getType().getCableType();
+    }
+
+    @Override
     public void connectCable(WireType cableType, TargetingInfo target, IImmersiveConnectable other) {
         super.connectCable(cableType, target, other);
         this.connectTo(Utils.toCC(other));
@@ -109,7 +142,7 @@ public abstract class TileEntityFluixConnectable
 
     @Override
     public void removeCable(ImmersiveNetHandler.Connection connection) {
-        if (!this.world.isRemote) {
+        if( !this.world.isRemote && connection != null ) {
             BlockPos opposite = connection.end;
             if (opposite.equals(Utils.toCC(this))) {
                 return;
@@ -131,19 +164,21 @@ public abstract class TileEntityFluixConnectable
 
     @Override
     public void update() {
-        if( !this.loaded && this.hasWorld() && !this.world.isRemote ) {
+        if( !this.loaded && this.hasWorld() ) {
             this.loaded = true;
-            this.createAELink();
+            if( !this.world.isRemote ) {
+                this.createAELink();
 
-            Set<ImmersiveNetHandler.Connection> connections = ImmersiveNetHandler.INSTANCE.getConnections(this.world, Utils.toCC(this));
-            if( connections != null ) {
-                for( ImmersiveNetHandler.Connection connection : connections ) {
-                    BlockPos opposite = connection.end;
-                    if( opposite.equals(Utils.toCC(this)) ) {
-                        continue;
+                Set<ImmersiveNetHandler.Connection> connections = ImmersiveNetHandler.INSTANCE.getConnections(this.world, Utils.toCC(this));
+                if( connections != null ) {
+                    for( ImmersiveNetHandler.Connection connection : connections ) {
+                        BlockPos opposite = connection.end;
+                        if( opposite.equals(Utils.toCC(this)) ) {
+                            continue;
+                        }
+
+                        this.connectTo(opposite);
                     }
-
-                    this.connectTo(opposite);
                 }
             }
         }
@@ -156,10 +191,15 @@ public abstract class TileEntityFluixConnectable
 
     @Override
     public void invalidate() {
-        super.invalidate();
+        if( this.world != null && !this.world.isAirBlock(this.pos) ) {
+            ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(this.pos, this.world, !this.world.isRemote);
+        }
+
         if( this.world != null && !this.world.isRemote ) {
             this.destroyAELink();
         }
+
+        super.invalidate();
     }
 
     @Override
@@ -192,14 +232,20 @@ public abstract class TileEntityFluixConnectable
             try {
                 this.connections.add(AEApi.instance().createGridConnection(nodeA, nodeB));
             } catch( FailedConnection ex ) {
-                IWConstants.LOG.log(Level.ERROR, ex.getMessage());
+                IWConstants.LOG.log(Level.DEBUG, ex.getMessage());
             }
         }
+    }
+
+    protected EnumFacing getFacing() {
+        return !this.world.isAirBlock(this.pos) ? this.world.getBlockState(this.pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
     }
 
     public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
+
+    protected abstract IWireFluixType getType();
 
     @Override
     public void writeCustomNBT(NBTTagCompound nbt, boolean descPacket) {
@@ -208,5 +254,15 @@ public abstract class TileEntityFluixConnectable
         if( this.gridNode == null ) {
             this.createAELink();
         }
+    }
+
+    @Override
+    public boolean isOverrideBox(AxisAlignedBB box, EntityPlayer entityPlayer, RayTraceResult ray, ArrayList<AxisAlignedBB> arrayList) {
+        return box.grow(0.002D, 0.002D, 0.002D).contains(ray.hitVec);
+    }
+
+    @Override
+    public float[] getBlockBounds() {
+        return null;
     }
 }

@@ -10,7 +10,7 @@ import blusunrize.immersiveengineering.api.ApiUtils;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.util.Utils;
-import de.sanandrew.mods.immersivewiring.tileentity.TileEntityFluixConnectable;
+import de.sanandrew.mods.immersivewiring.tileentity.ae.TileEntityFluixConnectable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,9 +19,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.animation.FastTESR;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Set;
 
+@SideOnly(Side.CLIENT)
 public class RenderTileIWConnectable
         extends FastTESR<TileEntityFluixConnectable>
 {

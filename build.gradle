@@ -37,8 +37,18 @@ task dlSanLib(type: LibDownloader) {
     target = file('libs/SanLib.jar')
 }
 
-setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib
-setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib
+//task dlRefinedStorage(type: LibDownloader) {
+//    sourceUrl = 'https://minecraft.curseforge.com/projects/refined-storage/files/2431884/download'
+//    target = file('libs/RefStorage.jar')
+//}
+
+//task dlMcMultipart(type: LibDownloader) {
+//    sourceUrl = 'https://minecraft.curseforge.com/projects/mcmultipart/files/2381408/download'
+//    target = file('libs/McMultipart.jar')
+//}
+
+setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib//, dlRefinedStorage, dlMcMultipart
+setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib//, dlRefinedStorage, dlMcMultipart
 
 version = "1.10.2-0.8.0-alpha.1"
 group = "de.sanandrew.mods"

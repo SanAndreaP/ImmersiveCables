@@ -7,12 +7,12 @@ import de.sanandrew.mods.immersivewiring.util.IWConfiguration;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 
-public class FluixWire
+public class QuartzWire
         extends WireType
 {
     @Override
     public String getUniqueName() {
-        return "AE2FLUIX";
+        return "AE2QUARTZ";
     }
 
     @Override
@@ -27,22 +27,22 @@ public class FluixWire
 
     @Override
     public int getColour(ImmersiveNetHandler.Connection connection) {
-        return 0xD29BFF;
+        return 0xE8E2DB;
     }
 
     @Override
     public int getMaxLength() {
-        return IWConfiguration.ae2FluixWireMaxLength;
+        return IWConfiguration.ae2QuartzWireMaxLength;
     }
 
     @Override
     public ItemStack getWireCoil() {
-        return new ItemStack(ItemRegistryAE2.WIRE_COIL, 1, Wires.FLUIX.ordinal());
+        return new ItemStack(ItemRegistryAE2.WIRE_COIL, 1, Wires.QUARTZ.ordinal());
     }
 
     @Override
     public double getRenderDiameter() {
-        return 0.06f;
+        return 0.04f;
     }
 
     @Override

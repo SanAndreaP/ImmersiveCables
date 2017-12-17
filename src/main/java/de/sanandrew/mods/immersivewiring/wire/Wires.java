@@ -8,30 +8,27 @@ package de.sanandrew.mods.immersivewiring.wire;
 
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 
-public final class WireRegistry
+public enum Wires
 {
-    public static void initialize() {
-        Wire.FLUIX.type = new FluixWire();
-        Wire.FLUIX_DENSE.type = new FluixDenseWire();
+    FLUIX(new FluixWire()),
+    FLUIX_DENSE(new FluixDenseWire()),
+    QUARTZ(new QuartzWire());
+
+    public static final Wires[] VALUES = values();
+
+    public final String key = this.name().toLowerCase();
+    public final WireType type;
+
+    Wires(WireType type) {
+        this.type = type;
     }
 
-    public enum Wire
-    {
-        FLUIX,
-        FLUIX_DENSE;
+    public WireType getType() {
+        return this.type;
+    }
 
-        public static final Wire[] VALUES = values();
-
-        public final String key = this.name().toLowerCase();
-        private WireType type;
-
-        public WireType getType() {
-            return this.type;
-        }
-
-        @Override
-        public String toString() {
-            return this.name().toLowerCase();
-        }
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
     }
 }

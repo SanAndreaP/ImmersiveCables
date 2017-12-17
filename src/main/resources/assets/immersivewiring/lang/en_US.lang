@@ -1,0 +1,13 @@
+item.immersivewiring:wire_coil.fluix.name=Fluix Wire Coil
+item.immersivewiring:wire_coil.fluix_dense.name=Dense Fluix Wire Coil
+item.immersivewiring:wire_coil.quartz.name=Quartz Fiber Wire Coil
+
+tile.immersivewiring:coil_block.0.name=Fluix Coil Block
+tile.immersivewiring:coil_block.1.name=Dense Fluix Coil Block
+tile.immersivewiring:coil_block.2.name=Quartz Fiber Coil Block
+tile.immersivewiring:transformer_fluix.0.name=Fluix Transformer
+tile.immersivewiring:transformer_fluix.1.name=Dense Fluix Transformer
+tile.immersivewiring:transformer_fluix.2.name=Quartz Fiber Connector
+tile.immersivewiring:relay_fluix.0.name=Fluix Wire Relay
+tile.immersivewiring:relay_fluix.1.name=Dense Fluix Wire Relay
+tile.immersivewiring:relay_fluix.2.name=Quartz Fiber Wire Relay

@@ -12,7 +12,7 @@ import blusunrize.immersiveengineering.common.util.ItemNBTHelper;
 import blusunrize.immersiveengineering.common.util.Utils;
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import de.sanandrew.mods.immersivewiring.util.ImmersiveWiring;
-import de.sanandrew.mods.immersivewiring.wire.WireRegistry;
+import de.sanandrew.mods.immersivewiring.wire.Wires;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,21 +46,21 @@ public class ItemCoil
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        int meta = Math.min(stack.getItemDamage(), WireRegistry.Wire.VALUES.length - 1);
-        return getUnlocalizedName() + '.' + WireRegistry.Wire.VALUES[meta].key;
+        int meta = Math.min(stack.getItemDamage(), Wires.VALUES.length - 1);
+        return getUnlocalizedName() + '.' + Wires.VALUES[meta].key;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List items) {
-        for( int i = 0; i < WireRegistry.Wire.VALUES.length; i++ ) {
+        for( int i = 0; i < Wires.VALUES.length; i++ ) {
             items.add(new ItemStack(item, 1, i));
         }
     }
 
     @Override
     public WireType getWireType(ItemStack stack) {
-        return WireRegistry.Wire.VALUES[Math.min(stack.getItemDamage(), WireRegistry.Wire.VALUES.length - 1)].getType();
+        return Wires.VALUES[Math.min(stack.getItemDamage(), Wires.VALUES.length - 1)].getType();
     }
 
     @Override

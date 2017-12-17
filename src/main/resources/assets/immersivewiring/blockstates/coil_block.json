@@ -5,6 +5,9 @@
     },
     "type=fluix_dense": {
       "model": "immersivewiring:coil_block_fluix_dense"
+    },
+    "type=quartz": {
+      "model": "immersivewiring:coil_block_quartz"
     }
   }
 }

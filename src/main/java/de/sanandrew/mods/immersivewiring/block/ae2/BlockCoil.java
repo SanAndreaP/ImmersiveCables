@@ -1,4 +1,4 @@
-package de.sanandrew.mods.immersivewiring.block;
+package de.sanandrew.mods.immersivewiring.block.ae2;
 
 import de.sanandrew.mods.immersivewiring.util.IWConstants;
 import net.minecraft.block.Block;
@@ -8,15 +8,10 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockCoil
@@ -65,7 +60,7 @@ public class BlockCoil
     public enum Type
             implements IStringSerializable
     {
-        FLUIX, FLUIX_DENSE;
+        FLUIX, FLUIX_DENSE, QUARTZ;
 
         public static final Type[] VALUES = values();
 
