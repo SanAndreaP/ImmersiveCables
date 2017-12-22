@@ -23,14 +23,14 @@ public class ICConfiguration
     public static final String CAT_AE2 = "Applied Energistics 2";
 
     public static boolean ae2Enabled = true;
-    public static float ae2FluixRelayPowerDrain = 16.0F;
-    public static float ae2DenseRelayPowerDrain = 16.0F;
+    public static float ae2FluixRelayPowerDrain = 4.0F;
+    public static float ae2DenseRelayPowerDrain = 6.0F;
     public static float ae2FluixTransformerPowerDrain = 16.0F;
-    public static float ae2DenseTransformerPowerDrain = 16.0F;
-    public static float ae2QuartzConnectorPowerDrain = 4.0F;
+    public static float ae2DenseTransformerPowerDrain = 20.0F;
+    public static float ae2QuartzConnectorPowerDrain = 2.0F;
     public static int ae2FluixWireMaxLength = 24;
     public static int ae2DenseWireMaxLength = 16;
-    public static int ae2QuartzWireMaxLength = 16;
+    public static int ae2QuartzWireMaxLength = 24;
     //endregion
 
     //region RS
