@@ -12,8 +12,8 @@ tile.immersivecables:transformer_fluix.1.name=Dense Fluix Transformer
 tile.immersivecables:transformer_fluix.name=Quartz Fiber Connector
 tile.immersivecables:relay_fluix.0.name=Fluix Wire Relay
 tile.immersivecables:relay_fluix.1.name=Dense Fluix Wire Relay
-tile.immersivecables:connector_quartz.name=Quartz Fiber Wire Relay
-tile.immersivecables:transformer_refined.name=Refined Fiber Connector
-tile.immersivecables:relay_refined.name=Refined Fiber Wire Relay
+tile.immersivecables:connector_quartz.name=Quartz Fiber Connector
+tile.immersivecables:transformer_refined.name=Refined Transformer
+tile.immersivecables:relay_refined.name=Refined Relay
 
 itemGroup.immersivecables=Immersive Cables
