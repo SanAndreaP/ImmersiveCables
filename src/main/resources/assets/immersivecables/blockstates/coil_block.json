@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "type=fluix": {
+      "model": "immersivecables:coil_block_fluix"
+    },
+    "type=fluix_dense": {
+      "model": "immersivecables:coil_block_fluix_dense"
+    },
+    "type=quartz": {
+      "model": "immersivecables:coil_block_quartz"
+    },
+    "type=refined": {
+      "model": "immersivecables:coil_block_refined"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "base_side": "immersivecables:blocks/transformer_refined_side",
+    "base_top": "immersivecables:blocks/transformer_refined_top",
+    "base_bottom": "immersivecables:blocks/transformer_refined_bottom",
+    "rod": "immersivecables:blocks/relay_refined",
+    "particle": "immersivecables:blocks/transformer_refined_top"
+  },
+  "elements": [
+    {
+      "name": "base",
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 9, 16 ],
+      "faces": {
+        "north": { "texture": "#base_side", "uv": [ 0, 7, 16, 16 ] },
+        "east": { "texture": "#base_side", "uv": [ 0, 7, 16, 16 ] },
+        "south": { "texture": "#base_side", "uv": [ 0, 7, 16, 16 ] },
+        "west": { "texture": "#base_side", "uv": [ 0, 7, 16, 16 ] },
+        "down": { "texture": "#base_bottom", "uv": [ 0, 0, 16, 16 ] },
+        "up": { "texture": "#base_top", "uv": [ 0, 0, 16, 16 ] }
+      }
+    },
+    {
+      "name": "insulator_1",
+      "from": [ 5.0, 9.0, 5.0 ],
+      "to": [ 11.0, 11.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#rod", "uv": [ 0.0, 2.0, 6.0, 4.0 ] },
+        "east": { "texture": "#rod", "uv": [ 0.0, 2.0, 6.0, 4.0 ] },
+        "south": { "texture": "#rod", "uv": [ 0.0, 2.0, 6.0, 4.0 ] },
+        "west": { "texture": "#rod", "uv": [ 0.0, 2.0, 6.0, 4.0 ] },
+        "up": { "texture": "#rod", "uv": [ 0.0, 6.0, 6.0, 12.0 ] },
+        "down": { "texture": "#rod", "uv": [ 0.0, 6.0, 6.0, 12.0 ] }
+      }
+    },
+    {
+      "name": "insulator_2",
+      "from": [ 6.0, 11.0, 6.0 ],
+      "to": [ 10.0, 12.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "east": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "south": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "west": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] }
+      }
+    },
+    {
+      "name": "insulator_3",
+      "from": [ 5.0, 12.0, 5.0 ],
+      "to": [ 11.0, 14.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#rod", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+        "east": { "texture": "#rod", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+        "south": { "texture": "#rod", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+        "west": { "texture": "#rod", "uv": [ 0.0, 0.0, 6.0, 2.0 ] },
+        "up": { "texture": "#rod", "uv": [ 0.0, 6.0, 6.0, 12.0 ] },
+        "down": { "texture": "#rod", "uv": [ 0.0, 6.0, 6.0, 12.0 ] }
+      }
+    },
+    {
+      "name": "insulator_4",
+      "from": [ 6.0, 14.0, 6.0 ],
+      "to": [ 10.0, 15.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "east": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "south": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "west": { "texture": "#rod", "uv": [ 6.0, 4.0, 10.0, 5.0 ] },
+        "up": { "texture": "#rod", "uv": [ 6.0, 5.0, 10.0, 9.0 ] }
+      }
+    },
+    {
+      "name": "rod_top",
+      "from": [ 6.5, 15.0, 6.5 ],
+      "to": [ 9.5, 16.0, 9.5 ],
+      "faces": {
+        "north": { "texture": "#rod", "uv": [ 6.0, 0.0, 9.0, 1.0 ] },
+        "east": { "texture": "#rod", "uv": [ 6.0, 0.0, 9.0, 1.0 ] },
+        "south": { "texture": "#rod", "uv": [ 6.0, 0.0, 9.0, 1.0 ] },
+        "west": { "texture": "#rod", "uv": [ 6.0, 0.0, 9.0, 1.0 ] },
+        "up": { "texture": "#rod", "uv": [ 6.0, 1.0, 9.0, 4.0 ] },
+        "down": { "texture": "#rod", "uv": [ 6.0, 1.0, 9.0, 4.0 ] }
+      }
+    }
+  ]
+}

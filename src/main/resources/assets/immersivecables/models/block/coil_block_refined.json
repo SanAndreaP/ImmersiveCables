@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "immersivecables:blocks/coil_block_refined_top",
+        "side": "immersivecables:blocks/coil_block_refined"
+    }
+}

@@ -1,3 +1,5 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 buildscript {
     repositories {
         jcenter()
@@ -32,27 +34,23 @@ task dlAppliedEnergistics(type: LibDownloader) {
     target = file('libs/AppEnergistics.jar')
 }
 
-task dlSanLib(type: LibDownloader) {
-    sourceUrl = 'https://minecraft.curseforge.com/projects/sanlib/files/2508037/download'
-    target = file('libs/SanLib.jar')
+task dlRefinedStorage(type: LibDownloader) {
+    sourceUrl = 'https://minecraft.curseforge.com/projects/refined-storage/files/2431884/download'
+    target = file('libs/RefStorage.jar')
 }
 
-//task dlRefinedStorage(type: LibDownloader) {
-//    sourceUrl = 'https://minecraft.curseforge.com/projects/refined-storage/files/2431884/download'
-//    target = file('libs/RefStorage.jar')
-//}
+task dlMcMultipart(type: LibDownloader) {
+    sourceUrl = 'https://minecraft.curseforge.com/projects/mcmultipart/files/2381408/download'
+    target = file('libs/McMultipart.jar')
+}
 
-//task dlMcMultipart(type: LibDownloader) {
-//    sourceUrl = 'https://minecraft.curseforge.com/projects/mcmultipart/files/2381408/download'
-//    target = file('libs/McMultipart.jar')
-//}
+setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlRefinedStorage, dlMcMultipart
+setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlRefinedStorage, dlMcMultipart
+setupCiWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlRefinedStorage, dlMcMultipart
 
-setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib//, dlRefinedStorage, dlMcMultipart
-setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlSanLib//, dlRefinedStorage, dlMcMultipart
-
-version = "1.10.2-0.8.0-alpha.1"
+version = "1.10.2-1.0.0"
 group = "de.sanandrew.mods"
-archivesBaseName = "ImmersiveIntegrationRebirth"
+archivesBaseName = "ImmersiveCables"
 
 sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
 compileJava {
@@ -93,6 +91,13 @@ processResources {
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'de.sanandrew.mods.immersivecables.core.RefinedFixerLoadingPlugin'
+        attributes 'FMLCorePluginContainsFMLMod' : 'true'
+    }
+}
+
 sourceJar {
     from sourceSets.main.java
     appendix = 'src'
@@ -104,7 +109,8 @@ task deobfJar(type: Jar) {
     appendix = 'deobf'
     archiveName = "${baseName}-${version}-${appendix}.jar"
     manifest {
-        attributes 'FMLAT': 'turretmodrebirth_at.cfg'
+        attributes 'FMLCorePlugin': 'de.sanandrew.mods.immersivecables.core.RefinedFixerLoadingPlugin'
+        attributes 'FMLCorePluginContainsFMLMod' : 'true'
     }
 }
 
@@ -120,7 +126,7 @@ artifacts {
 }
 
 project.ext {
-    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/"
+    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/" as GStringImpl
 }
 
 class LibDownloader extends DefaultTask {

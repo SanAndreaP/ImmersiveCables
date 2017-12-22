@@ -1,0 +1,10 @@
+{
+  "parent": "immersivecables:block/transformer_refined_offline",
+  "textures": {
+    "base_side": "immersivecables:blocks/transformer_refined_side_online",
+    "base_top": "immersivecables:blocks/transformer_refined_top",
+    "base_bottom": "immersivecables:blocks/transformer_refined_bottom",
+    "rod": "immersivecables:blocks/relay_refined",
+    "particle": "immersivecables:blocks/transformer_refined_top"
+  }
+}

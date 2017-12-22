@@ -1,15 +1,14 @@
 [
   {
-    "modid" : "immersivewiring",
-    "name" : "Immersive Wiring",
-    "version": "0.1.0-alpha.1",
+    "modid" : "immersivecables",
+    "name" : "Immersive Cables",
+    "version": "1.0.0",
     "mcversion": "1.10.2",
     "authorList": [
-      "UnwrittenFun",
       "SanAndreasP"
     ],
     "description": "Adds IE-style wires and blocks that integrate with other mods",
-    "url" : "https://github.com/SanAndreasP/ImmersiveWiring",
+    "url" : "https://github.com/SanAndreasP/immersivecables",
     "updateUrl" : "",
     "logoFile" : "",
     "parent" : "",

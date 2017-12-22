@@ -1,0 +1,172 @@
+{
+  "parent": "block/cube_all",
+  "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+  "display": {
+    "firstperson_righthand": {
+      "scale": [ 0.5, 0.5, 0.5 ],
+      "translation": [ 0, 0.25, 0.125 ]
+    },
+    "firstperson_lefthand": {
+      "scale": [ 0.5, 0.5, 0.5 ],
+      "translation": [ 0, 0.25, 0.125 ]
+    },
+    "thirdperson_righthand": {
+      "scale": [ 0.5, 0.5, 0.5 ],
+      "translation": [ -1.125, 2.0, 2.75 ],
+      "rotation": [70, 70, 0]},
+    "thirdperson_lefthand": {
+      "scale": [ 0.5, 0.5, 0.5 ],
+      "translation": [ -1.125, 2.0, 2.75 ],
+      "rotation": [ 70, 70, 0 ]
+    },
+    "fixed": {
+      "scale": [ 2, 2, 2 ],
+      "translation": [ 0, 0, 0 ],
+      "rotation": [ 0, -90, 0 ]
+    },
+    "gui": {
+      "translation": [ 0, 1.875, 0 ],
+      "rotation": [ 30, 135, 0 ],
+      "scale": [ 0.75, 0.75, 0.75 ]
+    }
+  },
+  "textures": {
+    "0": "immersivecables:blocks/relay_fluix_dense",
+    "particle": "immersivecables:blocks/relay_fluix_dense"
+  },
+  "elements": [
+    {
+      "name": "rod_1",
+      "from": [ 6.5, 0.0, 6.5 ],
+      "to": [ 9.5, 1.0, 9.5 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 3.0, 3.0, 4.0 ] },
+        "east": { "texture": "#0", "uv": [ 3.0, 3.0, 6.0, 4.0 ] },
+        "south": { "texture": "#0", "uv": [ 6.0, 3.0, 9.0, 4.0 ] },
+        "west": { "texture": "#0", "uv": [ 9.0, 3.0, 12.0, 4.0 ] },
+        "down": { "texture": "#0", "uv": [ 6.0, 0.0, 9.0, 3.0 ] }
+      }
+    },
+    {
+      "name": "isolator_1_1",
+      "from": [ 6.0, 1.0, 6.0 ],
+      "to": [ 10.0, 2.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "east": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "south": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "west": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "down": { "texture": "#0", "uv": [ 0.0, 4.0, 4.0, 8.0 ] }
+      }
+    },
+    {
+      "name": "isolator_1_2",
+      "from": [ 5.0, 2.0, 5.0 ],
+      "to": [ 11.0, 4.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "east": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "south": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "west": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "up": { "texture": "#0", "uv": [ 10.0, 4.0, 16.0, 10.0 ] },
+        "down": { "texture": "#0", "uv": [ 4.0, 4.0, 10.0, 10.0 ] }
+      }
+    },
+    {
+      "name": "rod_2",
+      "from": [ 6.5, 4.0, 6.5 ],
+      "to": [ 9.5, 5.0, 9.5 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 3.0, 3.0, 4.0 ] },
+        "east": { "texture": "#0", "uv": [ 3.0, 3.0, 6.0, 4.0 ] },
+        "south": { "texture": "#0", "uv": [ 6.0, 3.0, 9.0, 4.0 ] },
+        "west": { "texture": "#0", "uv": [ 9.0, 3.0, 12.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "isolator_2_1",
+      "from": [ 6.0, 5.0, 6.0 ],
+      "to": [ 10.0, 6.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "east": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "south": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "west": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "down": { "texture": "#0", "uv": [ 0.0, 4.0, 4.0, 8.0 ] }
+      }
+    },
+    {
+      "name": "isolator_2_2",
+      "from": [ 5.0, 6.0, 5.0 ],
+      "to": [ 11.0, 8.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "east": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "south": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "west": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "up": { "texture": "#0", "uv": [ 10.0, 4.0, 16.0, 10.0 ] },
+        "down": { "texture": "#0", "uv": [ 4.0, 4.0, 10.0, 10.0 ] }
+      }
+    },
+    {
+      "name": "rod_3",
+      "from": [ 6.5, 8.0, 6.5 ],
+      "to": [ 9.5, 9.0, 9.5 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 3.0, 3.0, 4.0 ] },
+        "east": { "texture": "#0", "uv": [ 3.0, 3.0, 6.0, 4.0 ] },
+        "south": { "texture": "#0", "uv": [ 6.0, 3.0, 9.0, 4.0 ] },
+        "west": { "texture": "#0", "uv": [ 9.0, 3.0, 12.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "isolator_3_1",
+      "from": [ 6.0, 9.0, 6.0 ],
+      "to": [ 10.0, 10.0, 10.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "east": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "south": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "west": { "texture": "#0", "uv": [ 0.0, 8.0, 4.0, 9.0 ] },
+        "down": { "texture": "#0", "uv": [ 0.0, 4.0, 4.0, 8.0 ] }
+      }
+    },
+    {
+      "name": "isolator_3_2",
+      "from": [ 5.0, 10.0, 5.0 ],
+      "to": [ 11.0, 12.0, 11.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "east": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "south": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "west": { "texture": "#0", "uv": [ 4.0, 10.0, 10.0, 12.0 ] },
+        "up": { "texture": "#0", "uv": [ 10.0, 4.0, 16.0, 10.0 ] },
+        "down": { "texture": "#0", "uv": [ 4.0, 4.0, 10.0, 10.0 ] }
+      }
+    },
+    {
+      "name": "rod_top_1",
+      "from": [ 7.0, 12.0, 7.0 ],
+      "to": [ 9.0, 13.0, 9.0 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 3.0, 2.0, 4.0 ] },
+        "east": { "texture": "#0", "uv": [ 3.0, 3.0, 5.0, 4.0 ] },
+        "south": { "texture": "#0", "uv": [ 6.0, 3.0, 8.0, 4.0 ] },
+        "west": { "texture": "#0", "uv": [ 9.0, 3.0, 11.0, 4.0 ] }
+      }
+    },
+    {
+      "name": "rod_top_2",
+      "from": [ 6.5, 13.0, 6.5 ],
+      "to": [ 9.5, 14.0, 9.5 ],
+      "faces": {
+        "north": { "texture": "#0", "uv": [ 0.0, 3.0, 3.0, 4.0 ] },
+        "east": { "texture": "#0", "uv": [ 3.0, 3.0, 6.0, 4.0 ] },
+        "south": { "texture": "#0", "uv": [ 6.0, 3.0, 9.0, 4.0 ] },
+        "west": { "texture": "#0", "uv": [ 9.0, 3.0, 12.0, 4.0 ] },
+        "up": { "texture": "#0", "uv": [ 3.0, 0.0, 6.0, 3.0 ] },
+        "down": { "texture": "#0", "uv": [ 6.0, 0.0, 9.0, 3.0 ] }
+      }
+    }
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "parent": "immersivewiring:block/transformer_fluix_offline",
-  "textures": {
-    "base_side": "immersivewiring:blocks/transformer_fluix_side",
-    "base_top": "immersivewiring:blocks/transformer_fluix_top",
-    "rod": "immersivewiring:blocks/relay_fluix_dense",
-    "particle": "immersivewiring:blocks/transformer_fluix_top"
-  }
-}

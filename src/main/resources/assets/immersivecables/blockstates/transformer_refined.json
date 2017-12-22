@@ -1,0 +1,52 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline" },
+      "when": { "facing":"up", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline", "x": 180 },
+      "when": { "facing":"down", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline", "x": 90 },
+      "when": { "facing":"north", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline", "x": -90 },
+      "when": { "facing":"south", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline", "x": 90, "y": 90 },
+      "when": { "facing":"east", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_offline", "x": -90, "y": 90 },
+      "when": { "facing":"west", "active": false }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online" },
+      "when": { "facing":"up", "active": true }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online", "x": 180 },
+      "when": { "facing":"down", "active": true }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online", "x": 90 },
+      "when": { "facing":"north", "active": true }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online", "x": -90 },
+      "when": { "facing":"south", "active": true }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online", "x": 90, "y": 90 },
+      "when": { "facing":"east", "active": true }
+    },
+    {
+      "apply": { "model": "immersivecables:transformer_refined_online", "x": -90, "y": 90 },
+      "when": { "facing":"west", "active": true }
+    }
+  ]
+}

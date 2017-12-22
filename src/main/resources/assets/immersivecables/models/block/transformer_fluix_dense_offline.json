@@ -1,0 +1,9 @@
+{
+  "parent": "immersivecables:block/transformer_fluix_offline",
+  "textures": {
+    "base_side": "immersivecables:blocks/transformer_fluix_side",
+    "base_top": "immersivecables:blocks/transformer_fluix_top",
+    "rod": "immersivecables:blocks/relay_fluix_dense",
+    "particle": "immersivecables:blocks/transformer_fluix_top"
+  }
+}

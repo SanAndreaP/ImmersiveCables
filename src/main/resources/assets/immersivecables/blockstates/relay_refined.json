@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "immersivecables:relay_refined"
+    },
+    "facing=down": {
+      "model": "immersivecables:relay_refined",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "immersivecables:relay_refined",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "immersivecables:relay_refined",
+      "x": -90
+    },
+    "facing=east": {
+      "model": "immersivecables:relay_refined",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "immersivecables:relay_refined",
+      "x": -90,
+      "y": 90
+    }
+  }
+}

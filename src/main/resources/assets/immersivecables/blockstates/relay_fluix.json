@@ -1,0 +1,54 @@
+{
+  "variants": {
+    "facing=up,type=fluix": {
+      "model": "immersivecables:relay_fluix"
+    },
+    "facing=down,type=fluix": {
+      "model": "immersivecables:relay_fluix",
+      "x": 180
+    },
+    "facing=north,type=fluix": {
+      "model": "immersivecables:relay_fluix",
+      "x": 90
+    },
+    "facing=south,type=fluix": {
+      "model": "immersivecables:relay_fluix",
+      "x": -90
+    },
+    "facing=east,type=fluix": {
+      "model": "immersivecables:relay_fluix",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,type=fluix": {
+      "model": "immersivecables:relay_fluix",
+      "x": -90,
+      "y": 90
+    },
+    "facing=up,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense"
+    },
+    "facing=down,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense",
+      "x": 180
+    },
+    "facing=north,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense",
+      "x": 90
+    },
+    "facing=south,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense",
+      "x": -90
+    },
+    "facing=east,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,type=fluix_dense": {
+      "model": "immersivecables:relay_fluix_dense",
+      "x": -90,
+      "y": 90
+    }
+  }
+}
