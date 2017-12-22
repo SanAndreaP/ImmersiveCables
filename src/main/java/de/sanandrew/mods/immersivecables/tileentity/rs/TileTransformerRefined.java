@@ -8,13 +8,11 @@ package de.sanandrew.mods.immersivecables.tileentity.rs;
 
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import com.raoulvdberge.refinedstorage.api.network.INetworkMaster;
 import com.raoulvdberge.refinedstorage.api.network.INetworkNode;
 import de.sanandrew.mods.immersivecables.block.rs.BlockRegistryRS;
 import de.sanandrew.mods.immersivecables.block.rs.BlockTransformerRefined;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
-import de.sanandrew.mods.immersivecables.util.ICConstants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -26,11 +24,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,6 +46,8 @@ public class TileTransformerRefined
                 if( node.getNetwork() != null ) {
                     node.getNetwork().getNodeGraph().rebuild();
                 }
+            } else if( connected instanceof INetworkMaster ) {
+                ((INetworkMaster) connected).getNodeGraph().rebuild();
             }
         }
     }
@@ -148,28 +145,12 @@ public class TileTransformerRefined
         }
     }
 
-    private static Method writeConnsToNBT;
-
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        if( writeConnsToNBT == null ) {
-            try {
-                writeConnsToNBT = TileEntityImmersiveConnectable.class.getDeclaredMethod("writeConnsToNBT", NBTTagCompound.class);
-                writeConnsToNBT.setAccessible(true);
-            } catch( NoSuchMethodException e ) {
-                ICConstants.LOG.log(Level.ERROR, e);
-            }
-        }
-        if( writeConnsToNBT != null ) {
-            try {
-                writeConnsToNBT.invoke(this, nbt);
-            } catch( IllegalAccessException | InvocationTargetException e ) {
-                ICConstants.LOG.log(Level.ERROR, e);
-            }
-        }
+        this.writeCustomNBT(nbt, true);
         nbt.setBoolean("rsActive", this.isConnected());
         return new SPacketUpdateTileEntity(this.pos, 1, nbt);
     }

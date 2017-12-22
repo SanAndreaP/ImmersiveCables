@@ -115,6 +115,8 @@ public class TileTransformerFluix
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound nbt = new NBTTagCompound();
+        this.writeToNBT(nbt);
+        this.writeCustomNBT(nbt, true);
         nbt.setBoolean("meActive", this.isActive);
         return new SPacketUpdateTileEntity(this.pos, 0, nbt);
     }

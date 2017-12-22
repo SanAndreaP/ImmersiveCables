@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ICConstants.ID, name = ICConstants.NAME, version = ICConstants.VERSION, dependencies = ICConstants.DEPENDENCIES, guiFactory = ImmersiveCables.GUI_FACTORY)
 public class ImmersiveCables
 {
-    static final String GUI_FACTORY = "de.sanandrew.mods.immersivecables.client.util.IWGuiFactory";
+    static final String GUI_FACTORY = "de.sanandrew.mods.immersivecables.client.util.ICGuiFactory";
     private static final String MOD_PROXY_CLIENT = "de.sanandrew.mods.immersivecables.client.util.ClientProxy";
     private static final String MOD_PROXY_COMMON = "de.sanandrew.mods.immersivecables.util.CommonProxy";
 
