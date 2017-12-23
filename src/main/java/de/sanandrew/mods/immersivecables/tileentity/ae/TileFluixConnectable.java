@@ -138,6 +138,8 @@ public abstract class TileFluixConnectable
                     break;
                 }
             }
+
+            this.destroyAELink();
         }
 
         super.removeCable(connection);
@@ -172,12 +174,8 @@ public abstract class TileFluixConnectable
 
     @Override
     public void invalidate() {
-        if( this.world != null && !this.world.isAirBlock(this.pos) ) {
-            ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(this.pos, this.world, !this.world.isRemote);
-        }
-
-        if( this.world != null && !this.world.isRemote ) {
-            this.destroyAELink();
+        if( this.world != null && !this.world.isRemote && this.gridNode != null ) {
+            this.gridNode.updateState();
         }
 
         super.invalidate();
@@ -185,8 +183,8 @@ public abstract class TileFluixConnectable
 
     @Override
     public void onChunkUnload() {
-        if( this.world != null && !this.world.isRemote ) {
-            this.destroyAELink();
+        if( this.world != null && !this.world.isRemote && this.gridNode != null ) {
+            this.gridNode.updateState();
         }
     }
 

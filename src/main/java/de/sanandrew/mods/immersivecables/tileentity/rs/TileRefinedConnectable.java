@@ -64,10 +64,6 @@ public abstract class TileRefinedConnectable
 
     @Override
     public void invalidate() {
-        if( this.world != null && !this.world.isAirBlock(this.pos) ) {
-            ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(this.pos, this.world, !this.world.isRemote);
-        }
-
         super.invalidate();
 
         if( this.getNode().getNetwork() != null ) {
