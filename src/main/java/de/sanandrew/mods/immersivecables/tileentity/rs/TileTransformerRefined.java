@@ -8,13 +8,12 @@ package de.sanandrew.mods.immersivecables.tileentity.rs;
 
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
-import com.raoulvdberge.refinedstorage.api.network.INetworkMaster;
-import com.raoulvdberge.refinedstorage.api.network.INetworkNode;
+import com.raoulvdberge.refinedstorage.api.network.INetwork;
+import com.raoulvdberge.refinedstorage.api.network.INetworkNodeVisitor;
+import com.raoulvdberge.refinedstorage.api.network.node.INetworkNodeProxy;
 import de.sanandrew.mods.immersivecables.block.rs.BlockRegistryRS;
 import de.sanandrew.mods.immersivecables.block.rs.BlockTransformerRefined;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
-import de.sanandrew.mods.immersivecables.util.ICConstants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -26,11 +25,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,26 +42,17 @@ public class TileTransformerRefined
         if( !this.loaded ) {
             this.loaded = true;
             TileEntity connected = this.world.getTileEntity(this.pos.offset(this.getFacing().getOpposite()));
-            if( connected instanceof INetworkNode ) {
-                INetworkNode node = (INetworkNode) connected;
-                if( node.getNetwork() != null ) {
-                    node.getNetwork().getNodeGraph().rebuild();
+            if( connected instanceof INetworkNodeProxy ) {
+                INetworkNodeProxy node = (INetworkNodeProxy) connected;
+                if( node.getNode().getNetwork() != null ) {
+                    node.getNode().getNetwork().getNodeGraph().rebuild();
                 }
             }
         }
     }
 
     @Override
-    public void onConnected(INetworkMaster iNetworkMaster) {
-        super.onConnected(iNetworkMaster);
-        if( !this.world.isAirBlock(this.pos) ) {
-            this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos).withProperty(BlockTransformerRefined.ACTIVE, this.isActive), 3);
-        }
-    }
-
-    @Override
-    public void onDisconnected(INetworkMaster iNetworkMaster) {
-        super.onDisconnected(iNetworkMaster);
+    public void onConnectionChanged(INetwork iNetworkMaster) {
         if( !this.world.isAirBlock(this.pos) ) {
             this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos).withProperty(BlockTransformerRefined.ACTIVE, this.isActive), 3);
         }
@@ -124,15 +111,20 @@ public class TileTransformerRefined
     }
 
     @Override
-    public boolean canConduct(EnumFacing enumFacing) {
-        return this.getFacing().getOpposite() == enumFacing;
+    public void visitNodes(INetworkNodeVisitor.Operator operator) {
+        EnumFacing facing = this.getFacing();
+        operator.apply(this.world, this.pos.offset(facing.getOpposite()), facing);
     }
 
     @Override
-    public ItemStack getNodeItemStack() {
-        return new ItemStack(BlockRegistryRS.TRANSFORMER_RS, 1, 0);
+    public boolean canConduct(@Nullable EnumFacing direction) {
+        return direction == this.getFacing().getOpposite();
     }
 
+    @Override
+    public ItemStack getItemStack() {
+        return new ItemStack(BlockRegistryRS.TRANSFORMER_RS, 1, 0);
+    }
 
     public boolean isRsActive() {
         return this.isActive;
@@ -148,36 +140,20 @@ public class TileTransformerRefined
         }
     }
 
-    private static Method writeConnsToNBT;
-
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
-        if( writeConnsToNBT == null ) {
-            try {
-                writeConnsToNBT = TileEntityImmersiveConnectable.class.getDeclaredMethod("writeConnsToNBT", NBTTagCompound.class);
-                writeConnsToNBT.setAccessible(true);
-            } catch( NoSuchMethodException e ) {
-                ICConstants.LOG.log(Level.ERROR, e);
-            }
-        }
-        if( writeConnsToNBT != null ) {
-            try {
-                writeConnsToNBT.invoke(this, nbt);
-            } catch( IllegalAccessException | InvocationTargetException e ) {
-                ICConstants.LOG.log(Level.ERROR, e);
-            }
-        }
-        nbt.setBoolean("rsActive", this.isConnected());
+        this.writeCustomNBT(nbt, true);
+        nbt.setBoolean("rsActive", this.getNode().getNetwork() != null);
         return new SPacketUpdateTileEntity(this.pos, 1, nbt);
     }
 
     @Override
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound nbt = super.getUpdateTag();
-        nbt.setBoolean("rsActive", this.isConnected());
+        nbt.setBoolean("rsActive", this.getNode().getNetwork() != null);
         return nbt;
     }
 

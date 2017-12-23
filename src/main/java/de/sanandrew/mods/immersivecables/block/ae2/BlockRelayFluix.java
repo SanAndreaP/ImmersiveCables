@@ -20,14 +20,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class BlockRelayFluix
         extends BlockConnectable
@@ -86,9 +84,9 @@ public class BlockRelayFluix
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
         for( int i = 0; i < FluixType.VALUES.length; i++ ) {
-            list.add(new ItemStack(item, 1, i));
+            items.add(new ItemStack(this, 1, i));
         }
     }
 

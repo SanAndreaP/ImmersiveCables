@@ -10,7 +10,8 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
-import com.raoulvdberge.refinedstorage.api.network.INetworkMaster;
+import com.raoulvdberge.refinedstorage.api.network.INetwork;
+import com.raoulvdberge.refinedstorage.api.network.INetworkNodeVisitor;
 import de.sanandrew.mods.immersivecables.block.rs.BlockRegistryRS;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
 import net.minecraft.item.ItemStack;
@@ -18,22 +19,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
 public class TileRelayRefined
         extends TileRefinedConnectable
 {
-    @Override
-    public void onConnected(INetworkMaster iNetworkMaster) {
-        super.onConnected(iNetworkMaster);
-    }
-
-    @Override
-    public void onDisconnected(INetworkMaster iNetworkMaster) {
-        super.onDisconnected(iNetworkMaster);
-    }
-
     @Override
     public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
         EnumFacing facing = this.getFacing();
@@ -80,14 +72,25 @@ public class TileRelayRefined
         return ICConfiguration.rsRelayPowerDrain;
     }
 
+//    @Override
+//    public boolean canConduct(EnumFacing enumFacing) {
+//        return false;
+//    }
+
     @Override
-    public boolean canConduct(EnumFacing enumFacing) {
-        return false;
+    public ItemStack getItemStack() {
+        return new ItemStack(BlockRegistryRS.RELAY_RS, 1, 0);
     }
 
     @Override
-    public ItemStack getNodeItemStack() {
-        return new ItemStack(BlockRegistryRS.RELAY_RS, 1, 0);
+    public void onConnectionChanged(INetwork iNetworkMaster) { }
+
+    @Override
+    public void visitNodes(INetworkNodeVisitor.Operator operator) { }
+
+    @Override
+    public boolean canConduct(@Nullable EnumFacing direction) {
+        return false;
     }
 
     @Override

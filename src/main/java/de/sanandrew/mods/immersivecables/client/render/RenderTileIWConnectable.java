@@ -12,7 +12,7 @@ import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
 import blusunrize.immersiveengineering.common.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +29,7 @@ public class RenderTileIWConnectable
         extends FastTESR<TileEntityImmersiveConnectable>
 {
     @Override
-    public void renderTileEntityFast(TileEntityImmersiveConnectable te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer) {
+    public void renderTileEntityFast(TileEntityImmersiveConnectable te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
         Set<ImmersiveNetHandler.Connection> outputs = ImmersiveNetHandler.INSTANCE.getConnections(te.getWorld(), Utils.toCC(te));
         if( outputs != null ) {
             Vec3d tilePosVec = new Vec3d(x, y, z);
@@ -46,7 +46,7 @@ public class RenderTileIWConnectable
     }
 
     private static void tessellateConnectionFast(ImmersiveNetHandler.Connection connection, IImmersiveConnectable start, IImmersiveConnectable end,
-                                                 TextureAtlasSprite sprite, VertexBuffer buffer, Vec3d tilePos) {
+                                                 TextureAtlasSprite sprite, BufferBuilder buffer, Vec3d tilePos) {
         if( connection != null && start != null && end != null && connection.end != null && connection.start != null ) {
             int col = connection.cableType.getColour(connection);
             double radius = connection.cableType.getRenderDiameter() / 2.0D;
@@ -139,7 +139,7 @@ public class RenderTileIWConnectable
         }
     }
 
-    private static VertexBuffer setLightmap(VertexBuffer buffer, Vec3d pos) {
+    private static BufferBuilder setLightmap(BufferBuilder buffer, Vec3d pos) {
         BlockPos bPos = new BlockPos(pos);
         int bright = Minecraft.getMinecraft().world.getCombinedLight(bPos, 0);
         int bX = bright >> 16 & 0xFFFF;

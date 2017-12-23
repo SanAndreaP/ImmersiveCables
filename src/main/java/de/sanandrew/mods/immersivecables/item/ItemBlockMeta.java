@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
+import java.util.Objects;
+
 public final class ItemBlockMeta
         extends ItemBlock
 {
@@ -17,7 +19,7 @@ public final class ItemBlockMeta
         super(block);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setRegistryName(block.getRegistryName());
+        this.setRegistryName(Objects.requireNonNull(block.getRegistryName()));
     }
 
     @Override

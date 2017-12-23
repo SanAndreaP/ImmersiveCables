@@ -15,10 +15,8 @@ import de.sanandrew.mods.immersivecables.util.ICConstants;
 import de.sanandrew.mods.immersivecables.util.ItemBlockRegistry;
 import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
@@ -52,28 +50,24 @@ public final class ModelRegistry
         }
     }
 
-    public static void registerModelPre112() {
-        Item blockItem = Item.getItemFromBlock(ItemBlockRegistry.BLOCK_COIL);
-        if( blockItem != null ) {
-            ModelBakery.registerItemVariants(blockItem, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "coil_block_" + wire.getName()))
-                                                              .toArray(ResourceLocation[]::new));
-        }
-
-        ModelBakery.registerItemVariants(ItemBlockRegistry.WIRE_COIL, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "wire_" + wire.getName()))
-                                                                            .toArray(ResourceLocation[]::new));
-
-        if( ICConfiguration.isAe2Enabled() ) {
-            ModelRegistryAE2.registerModelPre112();
-        }
-        if( ICConfiguration.isRsEnabled() ) {
-            ModelRegistryRS.registerModelPre112();
-        }
-    }
+//    public static void registerModelPre112() {
+//        Item blockItem = Item.getItemFromBlock(ItemBlockRegistry.BLOCK_COIL);
+//        ModelBakery.registerItemVariants(blockItem, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "coil_block_" + wire.getName()))
+//                                                          .toArray(ResourceLocation[]::new));
+//
+//        ModelBakery.registerItemVariants(ItemBlockRegistry.WIRE_COIL, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "wire_" + wire.getName()))
+//                                                                            .toArray(ResourceLocation[]::new));
+//
+////        if( ICConfiguration.isAe2Enabled() ) {
+////            ModelRegistryAE2.registerModelPre112();
+////        }
+////        if( ICConfiguration.isRsEnabled() ) {
+////            ModelRegistryRS.registerModelPre112();
+////        }
+//    }
 
     public static void registerModelBlockItems(Block block, Map<Integer, ModelResourceLocation> metaToLocation) {
         Item blockItem = Item.getItemFromBlock(block);
-        if( blockItem != null ) {
-            metaToLocation.forEach((meta, location) -> ModelLoader.setCustomModelResourceLocation(blockItem, meta, location));
-        }
+        metaToLocation.forEach((meta, location) -> ModelLoader.setCustomModelResourceLocation(blockItem, meta, location));
     }
 }

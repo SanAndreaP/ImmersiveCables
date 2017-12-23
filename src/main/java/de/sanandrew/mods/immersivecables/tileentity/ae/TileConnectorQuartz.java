@@ -30,10 +30,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
+import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class TileConnectorQuartz
         extends TileFluixConnectable
@@ -165,58 +167,94 @@ public class TileConnectorQuartz
         }
     }
 
-    public double extractAEPower(double amt, Actionable mode, Set<IEnergyGrid> seen) {
-        double acquiredPower = 0.0D;
+    public Collection<IEnergyGridProvider> providers() {
+        LinkedList<IEnergyGridProvider> providers = new LinkedList<>();
 
         IEnergyGrid eg;
         try {
             eg = this.proxy.getEnergy();
-            acquiredPower += eg.extractAEPower(amt - acquiredPower, mode, seen);
+            providers.add(eg);
         } catch (GridAccessException ignored) { }
 
         try {
             eg = this.outerProxy.getEnergy();
-            acquiredPower += eg.extractAEPower(amt - acquiredPower, mode, seen);
+            providers.add(eg);
         } catch (GridAccessException ignored) { }
 
-        return acquiredPower;
+        return providers;
     }
 
-    public double injectAEPower(double amt, Actionable mode, Set<IEnergyGrid> seen) {
-        IEnergyGrid eg;
-        try {
-            eg = this.proxy.getEnergy();
-            if (!seen.contains(eg)) {
-                return eg.injectAEPower(amt, mode, seen);
-            }
-        } catch (GridAccessException ignored ) { }
-
-        try {
-            eg = this.outerProxy.getEnergy();
-            if (!seen.contains(eg)) {
-                return eg.injectAEPower(amt, mode, seen);
-            }
-        } catch (GridAccessException ignored ) { }
-
-        return amt;
+    @Override
+    public double extractProviderPower(double amt, Actionable mode) {
+        return 0;
+//        double acquiredPower = 0.0D;
+//
+//        IEnergyGrid eg;
+//        try {
+//            eg = this.proxy.getEnergy();
+//            acquiredPower += eg.extractAEPower(amt - acquiredPower, mode, PowerMultiplier.ONE);
+//        } catch (GridAccessException ignored) { }
+//
+//        try {
+//            eg = this.outerProxy.getEnergy();
+//            acquiredPower += eg.extractAEPower(amt - acquiredPower, mode, PowerMultiplier.ONE);
+//        } catch (GridAccessException ignored) { }
+//
+//        return acquiredPower;
     }
 
-    public double getEnergyDemand(double amt, Set<IEnergyGrid> seen) {
-        double demand = 0.0D;
-
-        IEnergyGrid eg;
-        try {
-            eg = this.proxy.getEnergy();
-            demand += eg.getEnergyDemand(amt - demand, seen);
-        } catch (GridAccessException ignored ) { }
-
-        try {
-            eg = this.outerProxy.getEnergy();
-            demand += eg.getEnergyDemand(amt - demand, seen);
-        } catch (GridAccessException ignored ) { }
-
-        return demand;
+    @Override
+    public double injectProviderPower(double v, @Nonnull Actionable actionable) {
+        return v;
+//        IEnergyGrid eg;
+//        try {
+//            eg = this.proxy.getEnergy();
+//            if (!seen.contains(eg)) {
+//                return eg.injectAEPower(amt, mode, seen);
+//            }
+//        } catch (GridAccessException ignored ) { }
+//
+//        try {
+//            eg = this.outerProxy.getEnergy();
+//            if (!seen.contains(eg)) {
+//                return eg.injectAEPower(amt, mode, seen);
+//            }
+//        } catch (GridAccessException ignored ) { }
+//
+//        return amt;
     }
+
+    @Override
+    public double getProviderEnergyDemand(double amt) {
+        return 0.0D;
+    }
+
+    @Override
+    public double getProviderStoredEnergy() {
+        return 0.0D;
+    }
+
+    @Override
+    public double getProviderMaxEnergy() {
+        return 0.0D;
+    }
+
+//    public double getEnergyDemand(double amt, Set<IEnergyGrid> seen) {
+//        double demand = 0.0D;
+//
+//        IEnergyGrid eg;
+//        try {
+//            eg = this.proxy.getEnergy();
+//            demand += eg.getEnergyDemand(amt - demand, seen);
+//        } catch (GridAccessException ignored ) { }
+//
+//        try {
+//            eg = this.outerProxy.getEnergy();
+//            demand += eg.getEnergyDemand(amt - demand, seen);
+//        } catch (GridAccessException ignored ) { }
+//
+//        return demand;
+//    }
 
     @Override
     public AENetworkProxy getProxy() {

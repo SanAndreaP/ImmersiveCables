@@ -17,6 +17,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.Objects;
+
 public final class BlockRegistryRS
 {
     public static final BlockTransformerRefined TRANSFORMER_RS = new BlockTransformerRefined();
@@ -30,7 +32,7 @@ public final class BlockRegistryRS
     }
 
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemBlock(TRANSFORMER_RS).setRegistryName(TRANSFORMER_RS.getRegistryName()));
-        event.getRegistry().register(new ItemBlock(RELAY_RS).setRegistryName(RELAY_RS.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(TRANSFORMER_RS).setRegistryName(Objects.requireNonNull(TRANSFORMER_RS.getRegistryName())));
+        event.getRegistry().register(new ItemBlock(RELAY_RS).setRegistryName(Objects.requireNonNull(RELAY_RS.getRegistryName())));
     }
 }

@@ -7,19 +7,25 @@
 package de.sanandrew.mods.immersivecables.util;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ICCreativeTab
         extends CreativeTabs
 {
     public static final ICCreativeTab INSTANCE = new ICCreativeTab();
 
+    private ItemStack tabIcon = ItemStack.EMPTY;
+
     public ICCreativeTab() {
         super(ICConstants.ID);
     }
 
     @Override
-    public Item getTabIconItem() {
-        return ItemBlockRegistry.WIRE_COIL;
+    public ItemStack getTabIconItem() {
+        if( this.tabIcon.isEmpty() ) {
+            this.tabIcon = new ItemStack(ItemBlockRegistry.WIRE_COIL, 1, 0);
+        }
+
+        return this.tabIcon;
     }
 }

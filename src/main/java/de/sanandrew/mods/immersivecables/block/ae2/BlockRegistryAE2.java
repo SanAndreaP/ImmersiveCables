@@ -19,6 +19,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.Objects;
+
 public final class BlockRegistryAE2
 {
     public static final BlockRelayFluix RELAY_FLUIX = new BlockRelayFluix();
@@ -36,6 +38,6 @@ public final class BlockRegistryAE2
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().register(new ItemBlockMeta(TRANSFORMER_FLUIX));
         event.getRegistry().register(new ItemBlockMeta(RELAY_FLUIX));
-        event.getRegistry().register(new ItemBlock(CONNECTOR_QUARTZ).setRegistryName(CONNECTOR_QUARTZ.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(CONNECTOR_QUARTZ).setRegistryName(Objects.requireNonNull(CONNECTOR_QUARTZ.getRegistryName())));
     }
 }

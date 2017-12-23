@@ -16,10 +16,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -55,6 +55,7 @@ public abstract class BlockConnectable
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isSideSolid(IBlockState baseState, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return false;
     }
@@ -102,7 +103,7 @@ public abstract class BlockConnectable
 
     @Override
     @SuppressWarnings("deprecation")
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         return getStateFromMeta(meta).withProperty(FACING, facing);
     }
 
@@ -113,6 +114,7 @@ public abstract class BlockConnectable
             if( tile != null ) {
                 tile.invalidate();
             }
+
             return super.rotateBlock(world, pos, axis);
         }
 
@@ -122,13 +124,13 @@ public abstract class BlockConnectable
     @Nullable
     @Override
     @SuppressWarnings("deprecation")
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn) {
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isPistonExtending) {
         TileEntity tile = world.getTileEntity(pos);
         if( tile instanceof IEBlockInterfaces.IAdvancedSelectionBounds ) {
             ((IEBlockInterfaces.IAdvancedSelectionBounds) tile).getAdvancedSelectionBounds().forEach(aabb -> {
@@ -137,7 +139,7 @@ public abstract class BlockConnectable
                 }
             });
         } else {
-            super.addCollisionBoxToList(state, world, pos, entityBox, collidingBoxes, entityIn);
+            super.addCollisionBoxToList(state, world, pos, entityBox, collidingBoxes, entityIn, isPistonExtending);
         }
     }
 

@@ -1,5 +1,5 @@
 {
-  "uvlMarker": true,
+  "ae2_uvl_marker": true,
   "parent": "block/block",
   "textures": {
     "base_side": "immersivecables:blocks/transformer_fluix_side_online",

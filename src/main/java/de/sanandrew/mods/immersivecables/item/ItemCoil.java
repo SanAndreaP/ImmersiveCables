@@ -7,14 +7,13 @@ import blusunrize.immersiveengineering.api.energy.wires.IWireCoil;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import blusunrize.immersiveengineering.common.IESaveData;
-import blusunrize.immersiveengineering.common.util.IEAchievements;
 import blusunrize.immersiveengineering.common.util.ItemNBTHelper;
 import blusunrize.immersiveengineering.common.util.Utils;
 import de.sanandrew.mods.immersivecables.util.ICConstants;
 import de.sanandrew.mods.immersivecables.util.ICCreativeTab;
-import de.sanandrew.mods.immersivecables.util.ImmersiveCables;
 import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,12 +23,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,9 +53,11 @@ public class ItemCoil
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List items) {
-        for( int i = 0; i < Wires.VALUES.length; i++ ) {
-            items.add(new ItemStack(item, 1, i));
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if( this.isInCreativeTab(tab) ) {
+            for( int i = 0; i < Wires.VALUES.length; i++ ) {
+                items.add(new ItemStack(this, 1, i));
+            }
         }
     }
 
@@ -66,17 +68,18 @@ public class ItemCoil
 
     @Override
     @SuppressWarnings({"unchecked", "deprecation"})
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean adv) {
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn) {
         if( stack.getTagCompound() != null && stack.getTagCompound().hasKey("linkingPos") ) {
             int[] link = stack.getTagCompound().getIntArray("linkingPos");
             if( link.length > 3 ) {
-                list.add(I18n.translateToLocalFormatted(Lib.DESC_INFO + "attachedToDim", link[1], link[2], link[3], link[0]));
+                tooltip.add(net.minecraft.util.text.translation.I18n.translateToLocalFormatted(Lib.DESC_INFO + "attachedToDim", link[1], link[2], link[3], link[0]));
             }
         }
     }
 
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         TileEntity tile = world.getTileEntity(pos);
+        ItemStack stack = player.getHeldItem(hand);
         if( tile instanceof IImmersiveConnectable && ((IImmersiveConnectable) tile).canConnect() ) {
             TargetingInfo target = new TargetingInfo(side, hitX, hitY, hitZ);
             WireType wire = this.getWireType(stack);
@@ -86,8 +89,6 @@ public class ItemCoil
                 if( !((IImmersiveConnectable) tile).canConnectCable(wire, target) ) {
                     if( !world.isRemote ) {
                         player.sendMessage(new TextComponentTranslation("chat.immersiveengineering.warning.wrongCable"));
-                    } else {
-                        ImmersiveCables.proxy.sendTryUseItemOnBlock(pos, side, hitX, hitY, hitZ, hand);
                     }
 
                     return EnumActionResult.FAIL;
@@ -141,9 +142,9 @@ public class ItemCoil
                                             nodeHere.connectCable(type, target, nodeLink);
                                             nodeLink.connectCable(type, targetLink, nodeHere);
                                             IESaveData.setDirty(world.provider.getDimension());
-                                            player.addStat(IEAchievements.connectWire);
+
                                             if( !player.capabilities.isCreativeMode ) {
-                                                --stack.stackSize;
+                                                stack.shrink(1);
                                             }
 
                                             ((TileEntity) nodeHere).markDirty();
@@ -166,8 +167,6 @@ public class ItemCoil
                             ItemNBTHelper.remove(stack, "linkingPos");
                             ItemNBTHelper.remove(stack, "targettingInfo");
                         }
-                    } else {
-                        ImmersiveCables.proxy.sendTryUseItemOnBlock(pos, side, hitX, hitY, hitZ, hand);
                     }
 
                     return EnumActionResult.SUCCESS;

@@ -7,7 +7,7 @@
 package de.sanandrew.mods.immersivecables.tileentity.ae;
 
 import appeng.api.AEApi;
-import appeng.api.exceptions.FailedConnection;
+import appeng.api.exceptions.FailedConnectionException;
 import appeng.api.networking.GridNotification;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridBlock;
@@ -193,7 +193,7 @@ public abstract class TileFluixConnectable
     public void createAELink() {
         if( !this.world.isRemote ) {
             if( this.gridNode == null ) {
-                this.gridNode = AEApi.instance().createGridNode(this);
+                this.gridNode = AEApi.instance().grid().createGridNode(this);
             }
             this.gridNode.updateState();
         }
@@ -211,8 +211,8 @@ public abstract class TileFluixConnectable
             IGridNode nodeA = ((IGridHost) teOpposite).getGridNode(AEPartLocation.INTERNAL);
             IGridNode nodeB = getGridNode(AEPartLocation.INTERNAL);
             try {
-                this.connections.add(AEApi.instance().createGridConnection(nodeA, nodeB));
-            } catch( FailedConnection ex ) {
+                this.connections.add(AEApi.instance().grid().createGridConnection(nodeA, nodeB));
+            } catch( FailedConnectionException ex ) {
                 ICConstants.LOG.log(Level.DEBUG, ex.getMessage());
             }
         }

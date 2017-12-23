@@ -39,15 +39,4 @@ public final class ModelRegistryRS
         ClientRegistry.bindTileEntitySpecialRenderer(TileTransformerRefined.class, new RenderTileIWConnectable());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRelayRefined.class, new RenderTileIWConnectable());
     }
-
-    public static void registerModelPre112() {
-        Item blockItem = Item.getItemFromBlock(BlockRegistryRS.TRANSFORMER_RS);
-        if( blockItem != null ) {
-            ModelBakery.registerItemVariants(blockItem, new ResourceLocation(ICConstants.ID, "transformer_refined"));
-        }
-        blockItem = Item.getItemFromBlock(BlockRegistryRS.RELAY_RS);
-        if( blockItem != null ) {
-            ModelBakery.registerItemVariants(blockItem, new ResourceLocation(ICConstants.ID, "relay_refined"));
-        }
-    }
 }

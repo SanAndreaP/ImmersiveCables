@@ -24,18 +24,17 @@ public class ICGuiFactory
     public void initialize(Minecraft minecraftInstance) { }
 
     @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return ICGuiConfig.class;
+    public boolean hasConfigGui() {
+        return true;
+    }
+
+    @Override
+    public GuiScreen createConfigGui(GuiScreen parentScreen) {
+        return new ICGuiConfig(parentScreen);
     }
 
     @Override
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
-        return null;
-    }
-
-    @Override
-    @Deprecated
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
         return null;
     }
 }
