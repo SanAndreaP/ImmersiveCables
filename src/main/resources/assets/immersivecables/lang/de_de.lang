@@ -1,0 +1,18 @@
+item.immersivecables:wire_coil.fluix.name=Fluix-Drahtrolle
+item.immersivecables:wire_coil.fluix_dense.name=Dichte Fluix-Drahtrolle
+item.immersivecables:wire_coil.quartz.name=Quartzfaser-Drahtrolle
+item.immersivecables:wire_coil.refined.name=Refined-Fiber-Drahtrolle
+
+tile.immersivecables:coil_block.0.name=Fluixspule
+tile.immersivecables:coil_block.1.name=Dichte Fluixspule
+tile.immersivecables:coil_block.2.name=Quartzfaserspule
+tile.immersivecables:coil_block.3.name=Refined-Fiberspule
+tile.immersivecables:transformer_fluix.0.name=Fluixtransformator
+tile.immersivecables:transformer_fluix.1.name=Dichter Fluixtransforator
+tile.immersivecables:relay_fluix.0.name=Fluixdrahtrelais
+tile.immersivecables:relay_fluix.1.name=Dichtes Fluixdrahtrelais
+tile.immersivecables:connector_quartz.name=Quartzfaserverbinder
+tile.immersivecables:transformer_refined.name=Refined-Transformator
+tile.immersivecables:relay_refined.name=Refined-Relais
+
+itemGroup.immersivecables=Immersive Cables
