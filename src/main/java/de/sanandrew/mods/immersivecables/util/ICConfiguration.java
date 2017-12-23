@@ -37,8 +37,8 @@ public class ICConfiguration
     public static final String CAT_RS = "Refined Storage";
 
     public static boolean rsEnabled = true;
-    public static int rsRelayPowerDrain = 1;
-    public static int rsTransformerPowerDrain = 2;
+    public static int rsRelayPowerDrain = 2;
+    public static int rsTransformerPowerDrain = 12;
     public static int rsWireMaxLength = 16;
     //endregion
 
