@@ -27,7 +27,7 @@ public class RefinedWire
 
     @Override
     public int getColour(ImmersiveNetHandler.Connection connection) {
-        return 0x77C6FF;
+        return WireColors.rsWireColor;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class QuartzWire
 
     @Override
     public int getColour(ImmersiveNetHandler.Connection connection) {
-        return 0xE8E2DB;
+        return WireColors.ae2QuartzWireColor;
     }
 
     @Override
