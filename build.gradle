@@ -48,7 +48,7 @@ setupDecompWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlR
 setupDevWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlRefinedStorage, dlMcMultipart
 setupCiWorkspace.dependsOn dlImmersiveEngineering, dlAppliedEnergistics, dlRefinedStorage, dlMcMultipart
 
-version = "1.10.2-1.0.1"
+version = "1.10.2-1.0.2"
 group = "de.sanandrew.mods"
 archivesBaseName = "ImmersiveCables"
 
