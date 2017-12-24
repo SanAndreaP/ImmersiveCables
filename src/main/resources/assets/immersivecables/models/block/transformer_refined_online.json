@@ -5,6 +5,7 @@
     "base_top": "immersivecables:blocks/transformer_refined_top",
     "base_bottom": "immersivecables:blocks/transformer_refined_bottom",
     "rod": "immersivecables:blocks/relay_refined",
-    "particle": "immersivecables:blocks/transformer_refined_top"
+    "particle": "immersivecables:blocks/transformer_refined_top",
+    "base_side_glow": "immersivecables:blocks/transformer_refined_side_online_glow"
   }
 }
