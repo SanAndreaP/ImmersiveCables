@@ -16,7 +16,7 @@ public final class ICConstants
 
     public static final String ID = "immersivecables";
     public static final Logger LOG = LogManager.getLogger(ID);
-    public static final String VERSION = "1.1.2";
+    public static final String VERSION = "1.2.0";
     public static final String NAME = "Immersive Wiring";
     public static final String DEPENDENCIES = "required-after:forge@[14.23.1.2555,];required-after:immersiveengineering@[0.12-75,];" +
                                                       "after:" + COMPAT_APPLIEDENERGISTICS + ';' +

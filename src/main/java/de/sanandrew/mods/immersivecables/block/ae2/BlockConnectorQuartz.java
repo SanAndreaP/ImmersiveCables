@@ -6,8 +6,6 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.block.ae2;
 
-import appeng.api.AEApi;
-import appeng.api.util.AEPartLocation;
 import de.sanandrew.mods.immersivecables.block.BlockConnectable;
 import de.sanandrew.mods.immersivecables.tileentity.ae.TileConnectorQuartz;
 import de.sanandrew.mods.immersivecables.tileentity.ae.TileFluixConnectable;
@@ -75,7 +73,7 @@ public class BlockConnectorQuartz
         if( !world.isRemote && placer instanceof EntityPlayer ) {
             TileEntity transformer = world.getTileEntity(pos);
             if( transformer instanceof TileFluixConnectable ) {
-                ((TileFluixConnectable) transformer).getGridNode(AEPartLocation.INTERNAL).setPlayerID(AEApi.instance().registries().players().getID((EntityPlayer) placer));
+                ((TileFluixConnectable) transformer).ownerCache = (EntityPlayer) placer;
             }
         }
     }
