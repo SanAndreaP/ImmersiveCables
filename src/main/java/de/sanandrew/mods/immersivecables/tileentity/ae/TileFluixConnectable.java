@@ -8,15 +8,15 @@ package de.sanandrew.mods.immersivecables.tileentity.ae;
 
 import appeng.api.AEApi;
 import appeng.api.exceptions.FailedConnectionException;
-import appeng.api.networking.GridNotification;
-import appeng.api.networking.IGrid;
-import appeng.api.networking.IGridBlock;
+import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridConnection;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
-import appeng.api.util.AEColor;
+import appeng.api.networking.security.IActionHost;
 import appeng.api.util.AEPartLocation;
 import appeng.api.util.DimensionalCoord;
+import appeng.me.helpers.AENetworkProxy;
+import appeng.me.helpers.IGridProxyable;
 import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
@@ -27,6 +27,7 @@ import blusunrize.immersiveengineering.common.util.Utils;
 import de.sanandrew.mods.immersivecables.util.ICConstants;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -38,66 +39,57 @@ import net.minecraft.util.math.RayTraceResult;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class TileFluixConnectable
         extends TileEntityImmersiveConnectable
-        implements IGridHost, IGridBlock, ITickable, IEBlockInterfaces.IAdvancedSelectionBounds
+        implements IActionHost, IGridProxyable, ITickable, IEBlockInterfaces.IAdvancedSelectionBounds
 {
-    public IGridNode gridNode;
-    public ArrayList<IGridConnection> connections = new ArrayList<>();
+//    public IGridNode gridNode;
+    public Queue<IGridConnection> connections = new ConcurrentLinkedQueue<>();
+    public AENetworkProxy proxy = this.createProxy();
+    public EntityPlayer ownerCache;
 
     protected List<AxisAlignedBB> cachedSelectionBounds;
 
     protected boolean loaded = false;
 
-    @Override
-    public boolean isWorldAccessible() {
-        return true;
-    }
-
-    @Override
-    public DimensionalCoord getLocation() {
-        return new DimensionalCoord(this);
-    }
-
-    @Override
-    public AEColor getGridColor() {
-        return AEColor.TRANSPARENT;
-    }
-
-    @Override
-    public void onGridNotification(GridNotification gridNotification) {
-
-    }
-
-    @Override
-    public void setNetworkStatus(IGrid iGrid, int i) {
-
-    }
-
-    @Override
-    public IGridHost getMachine() {
-        return this;
-    }
-
-    @Override
-    public void gridChanged() {
-
+    protected AENetworkProxy createProxy() {
+        return new AENetworkProxy(this, "proxy", new ItemStack(Blocks.BONE_BLOCK), true);
     }
 
     @Override
     public IGridNode getGridNode(AEPartLocation aePartLocation) {
-        if( this.gridNode == null ) {
-            this.createAELink();
-        }
-        return this.gridNode;
+        return this.proxy.getNode();
+    }
+
+    @Override
+    public void onChunkUnload() {
+        super.onChunkUnload();
+        this.connections.forEach(IGridConnection::destroy);
+        this.proxy.onChunkUnload();
     }
 
     @Override
     public void securityBreak() {
+        this.world.destroyBlock(this.pos, true);
+    }
 
+    protected void onReady() {
+        this.proxy.setVisualRepresentation(this.getMachineRepresentation());
+        this.proxy.setIdlePowerUsage(this.getIdlePowerUsage());
+        this.proxy.setValidSides(this.getConnectableSides());
+        this.proxy.setFlags(this.getFlags());
+        if( this.ownerCache != null ) {
+            this.proxy.setOwner(this.ownerCache);
+        }
+        this.proxy.onReady();
+
+        this.proxy.getNode().updateState();
     }
 
     @Override
@@ -105,9 +97,8 @@ public abstract class TileFluixConnectable
         return true;
     }
 
-    @Override
     public ItemStack getMachineRepresentation() {
-        return new ItemStack(this.blockType, 1, this.getBlockMetadata() & 1);
+        return new ItemStack(this.getBlockType(), 1, this.getBlockMetadata() & 1);
     }
 
     @Override
@@ -138,19 +129,21 @@ public abstract class TileFluixConnectable
                     break;
                 }
             }
-
-            this.destroyAELink();
         }
 
         super.removeCable(connection);
     }
+
+    public abstract double getIdlePowerUsage();
+    public abstract EnumSet<EnumFacing> getConnectableSides();
+    public abstract GridFlags[] getFlags();
 
     @Override
     public void update() {
         if( !this.loaded && this.hasWorld() ) {
             this.loaded = true;
             if( !this.world.isRemote ) {
-                this.createAELink();
+                this.onReady();
 
                 Set<ImmersiveNetHandler.Connection> connections = ImmersiveNetHandler.INSTANCE.getConnections(this.world, Utils.toCC(this));
                 if( connections != null ) {
@@ -174,33 +167,35 @@ public abstract class TileFluixConnectable
 
     @Override
     public void invalidate() {
-        if( this.world != null && !this.world.isRemote ) {
-            this.destroyAELink();
-        }
-
         super.invalidate();
+        this.connections.forEach(IGridConnection::destroy);
+        this.proxy.invalidate();
     }
 
     @Override
-    public void onChunkUnload() {
-        if( this.world != null && !this.world.isRemote ) {
-            this.destroyAELink();
-        }
+    public void validate() {
+        super.validate();
+        this.proxy.validate();
     }
 
-    public void createAELink() {
-        if( !this.world.isRemote ) {
-            if( this.gridNode == null ) {
-                this.gridNode = AEApi.instance().grid().createGridNode(this);
-            }
-            this.gridNode.updateState();
-        }
+    @Override
+    public AENetworkProxy getProxy() {
+        return this.proxy;
     }
 
-    public void destroyAELink() {
-        if( this.gridNode != null ) {
-            this.gridNode.destroy();
-        }
+    @Override
+    public DimensionalCoord getLocation() {
+        return new DimensionalCoord(this);
+    }
+
+    @Override
+    public void gridChanged() {
+
+    }
+
+    @Override
+    public IGridNode getActionableNode() {
+        return this.proxy.getNode();
     }
 
     public void connectTo(BlockPos pos) {
@@ -209,7 +204,10 @@ public abstract class TileFluixConnectable
             IGridNode nodeA = ((IGridHost) teOpposite).getGridNode(AEPartLocation.INTERNAL);
             IGridNode nodeB = getGridNode(AEPartLocation.INTERNAL);
             try {
-                this.connections.add(AEApi.instance().grid().createGridConnection(nodeA, nodeB));
+                if( nodeA != null ) {
+                    IGridConnection conn = AEApi.instance().grid().createGridConnection(nodeA, nodeB);
+                    this.connections.add(conn);
+                }
             } catch( FailedConnectionException ex ) {
                 ICConstants.LOG.log(Level.DEBUG, ex.getMessage());
             }
@@ -225,12 +223,16 @@ public abstract class TileFluixConnectable
     }
 
     @Override
-    public void writeCustomNBT(NBTTagCompound nbt, boolean descPacket) {
-        super.writeCustomNBT(nbt, descPacket);
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound = super.writeToNBT(compound);
+        this.proxy.writeToNBT(compound);
+        return compound;
+    }
 
-        if( this.gridNode == null ) {
-            this.createAELink();
-        }
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.proxy.readFromNBT(compound);
     }
 
     @Override

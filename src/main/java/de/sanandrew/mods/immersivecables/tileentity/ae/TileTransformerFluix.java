@@ -56,7 +56,7 @@ public class TileTransformerFluix
     }
 
     @Override
-    public EnumSet<GridFlags> getFlags() {
+    public GridFlags[] getFlags() {
         return this.getType().flags;
     }
 
@@ -75,12 +75,6 @@ public class TileTransformerFluix
     public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
         EnumFacing facing = this.getFacing();
         return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.4D, 0.5D + facing.getFrontOffsetY() * 0.4D, 0.5D + facing.getFrontOffsetZ() * 0.4D);
-    }
-
-    @Override
-    public void createAELink() {
-        super.createAELink();
-        this.updateOnGridChange(false);
     }
 
     @Override
@@ -117,14 +111,14 @@ public class TileTransformerFluix
         NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
         this.writeCustomNBT(nbt, true);
-        nbt.setBoolean("meActive", this.gridNode != null && this.gridNode.isActive());
+        nbt.setBoolean("meActive", this.proxy.getNode() != null && this.proxy.getNode().isActive());
         return new SPacketUpdateTileEntity(this.pos, 1, nbt);
     }
 
     @Override
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound nbt = super.getUpdateTag();
-        nbt.setBoolean("meActive", this.gridNode != null && this.gridNode.isActive());
+        nbt.setBoolean("meActive", this.proxy.getNode() != null && this.proxy.getNode().isActive());
         return nbt;
     }
 
@@ -139,9 +133,9 @@ public class TileTransformerFluix
     }
 
     private void updateOnGridChange(boolean force) {
-        if( !this.world.isRemote && this.gridNode != null && !this.world.isAirBlock(this.pos) ) {
+        if( !this.world.isRemote && !this.world.isAirBlock(this.pos) ) {
             boolean prevActive = this.isActive;
-            this.isActive = this.gridNode.isActive();
+            this.isActive = this.proxy.getNode() != null && this.proxy.getNode().isActive();
             if( prevActive != this.isActive || force ) {
                 this.markDirty();
                 this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos).withProperty(BlockTransformerFluix.ACTIVE, this.isActive), 3);

@@ -13,8 +13,6 @@ import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
 
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Locale;
 
 public enum FluixType
@@ -26,14 +24,14 @@ public enum FluixType
     public static final PropertyEnum<FluixType> TYPE = PropertyEnum.create("type", FluixType.class);
     public static final FluixType[] VALUES = values();
 
-    public final EnumSet<GridFlags> flags;
+    public final GridFlags[] flags;
     public final AECableType cableType;
     public final WireType wireType;
 
     FluixType(WireType wireType, AECableType cableType, GridFlags... flags) {
         this.wireType = wireType;
         this.cableType = cableType;
-        this.flags = flags == null || flags.length < 1 ? EnumSet.noneOf(GridFlags.class) : EnumSet.copyOf(Arrays.asList(flags));
+        this.flags = flags == null ? new GridFlags[0] : flags;
     }
 
     @Override

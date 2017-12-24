@@ -67,4 +67,7 @@ public class BlockTransformerRefined
         TileEntity te = world.getTileEntity(pos);
         return te instanceof TileTransformerRefined && ((TileTransformerRefined) te).isRsActive();
     }
+
+    @Override
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) { }
 }

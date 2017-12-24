@@ -6,8 +6,10 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.tileentity.rs;
 
+import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
+import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import com.raoulvdberge.refinedstorage.api.network.INetwork;
 import com.raoulvdberge.refinedstorage.api.network.INetworkNodeVisitor;
 import com.raoulvdberge.refinedstorage.api.network.node.INetworkNodeProxy;
@@ -124,6 +126,11 @@ public class TileTransformerRefined
     @Override
     public ItemStack getItemStack() {
         return new ItemStack(BlockRegistryRS.TRANSFORMER_RS, 1, 0);
+    }
+
+    @Override
+    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
+        return super.canConnectCable(cableType, target) && this.limitType == null;
     }
 
     public boolean isRsActive() {
