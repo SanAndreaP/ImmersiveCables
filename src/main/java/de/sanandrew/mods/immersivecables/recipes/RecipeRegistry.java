@@ -19,7 +19,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
+import java.util.Locale;
+
+@Mod.EventBusSubscriber(modid = ICConstants.ID)
 public final class RecipeRegistry
 {
     @SubscribeEvent
@@ -30,7 +32,7 @@ public final class RecipeRegistry
                                                              "CCC", "CIC", "CCC",
                                                              'C', new ItemStack(ItemBlockRegistry.WIRE_COIL, 1, wire.ordinal()),
                                                              'I', "ingotIron")
-                                                 .setRegistryName(ICConstants.ID, "wire_coil_block_" + wire.getName().toLowerCase()));
+                                                 .setRegistryName(ICConstants.ID, "wire_coil_block_" + wire.getName()));
         }
 
         if( ICConfiguration.isAe2Enabled() ) {

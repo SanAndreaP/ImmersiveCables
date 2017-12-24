@@ -9,6 +9,8 @@ package de.sanandrew.mods.immersivecables.wire;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import net.minecraft.util.IStringSerializable;
 
+import java.util.Locale;
+
 public enum Wires
         implements IStringSerializable
 {
@@ -19,7 +21,7 @@ public enum Wires
 
     public static final Wires[] VALUES = values();
 
-    public final String key = this.name().toLowerCase();
+    public final String key = this.name().toLowerCase(Locale.ROOT);
     public final WireType type;
 
     Wires(WireType type) {
@@ -32,11 +34,11 @@ public enum Wires
 
     @Override
     public String toString() {
-        return this.name().toLowerCase();
+        return this.name().toLowerCase(Locale.ROOT);
     }
 
     @Override
     public String getName() {
-        return this.name().toLowerCase();
+        return this.name().toLowerCase(Locale.ROOT);
     }
 }

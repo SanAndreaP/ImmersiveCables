@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(modid = ICConstants.ID, value = Side.CLIENT)
 public final class ModelRegistry
 {
     @SubscribeEvent
@@ -49,22 +49,6 @@ public final class ModelRegistry
             ModelRegistryRS.registerModels();
         }
     }
-
-//    public static void registerModelPre112() {
-//        Item blockItem = Item.getItemFromBlock(ItemBlockRegistry.BLOCK_COIL);
-//        ModelBakery.registerItemVariants(blockItem, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "coil_block_" + wire.getName()))
-//                                                          .toArray(ResourceLocation[]::new));
-//
-//        ModelBakery.registerItemVariants(ItemBlockRegistry.WIRE_COIL, Arrays.stream(Wires.VALUES).map(wire -> new ResourceLocation(ICConstants.ID, "wire_" + wire.getName()))
-//                                                                            .toArray(ResourceLocation[]::new));
-//
-////        if( ICConfiguration.isAe2Enabled() ) {
-////            ModelRegistryAE2.registerModelPre112();
-////        }
-////        if( ICConfiguration.isRsEnabled() ) {
-////            ModelRegistryRS.registerModelPre112();
-////        }
-//    }
 
     public static void registerModelBlockItems(Block block, Map<Integer, ModelResourceLocation> metaToLocation) {
         Item blockItem = Item.getItemFromBlock(block);
