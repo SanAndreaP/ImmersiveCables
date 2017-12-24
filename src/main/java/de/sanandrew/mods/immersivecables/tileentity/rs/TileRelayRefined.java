@@ -52,10 +52,10 @@ public class TileRelayRefined
             EnumFacing facing = this.getFacing();
             switch( facing ) {
                 case UP:
-                    this.cachedSelectionBounds = Collections.singletonList(new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 0.6875, 0.6875).offset(this.pos));
+                    this.cachedSelectionBounds = Collections.singletonList(new AxisAlignedBB(0.3125, 0.0, 0.3125, 0.6875, 0.6875, 0.6875).offset(this.pos));
                     break;
                 case DOWN:
-                    this.cachedSelectionBounds = Collections.singletonList(new AxisAlignedBB(0.3125, 0.5625, 0.3125, 1, 0.4375, 0.6875).offset(this.pos));
+                    this.cachedSelectionBounds = Collections.singletonList(new AxisAlignedBB(0.3125, 0.5625, 0.3125, 0.6875, 1, 0.6875).offset(this.pos));
                     break;
                 case NORTH:
                     this.cachedSelectionBounds = Collections.singletonList(new AxisAlignedBB(0.3125, 0.3125, 0.5625, 0.6875, 0.6875, 1).offset(this.pos));

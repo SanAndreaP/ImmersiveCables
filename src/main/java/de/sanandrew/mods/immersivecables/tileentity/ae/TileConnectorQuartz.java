@@ -20,7 +20,6 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
-import de.sanandrew.mods.immersivecables.block.ae2.BlockRegistryAE2;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
 import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.item.ItemStack;
@@ -39,7 +38,6 @@ public class TileConnectorQuartz
         extends TileFluixConnectable
         implements IGridProxyable, IEnergyGridProvider
 {
-    private AENetworkProxy proxy;
     private AENetworkProxy outerProxy;
 
     public TileConnectorQuartz() {
@@ -58,13 +56,24 @@ public class TileConnectorQuartz
     }
 
     @Override
+    protected void onReady() {
+        super.onReady();
+
+        this.outerProxy = new AENetworkProxy(this, "outer", this.getMachineRepresentation(), true);
+        this.outerProxy.setIdlePowerUsage(ICConfiguration.ae2QuartzConnectorPowerDrain);
+        this.outerProxy.setFlags(GridFlags.CANNOT_CARRY);
+        this.outerProxy.setValidSides(EnumSet.of(this.getFacing().getOpposite()));
+        this.outerProxy.onReady();
+    }
+
+    @Override
     public double getIdlePowerUsage() {
-        return ICConfiguration.ae2QuartzConnectorPowerDrain;
+        return 0.0D;
     }
 
     @Override
     public EnumSet<EnumFacing> getConnectableSides() {
-        return EnumSet.of(this.getFacing().getOpposite());
+        return EnumSet.noneOf(EnumFacing.class);
     }
 
     @Override
@@ -73,8 +82,8 @@ public class TileConnectorQuartz
     }
 
     @Override
-    public EnumSet<GridFlags> getFlags() {
-        return EnumSet.of(GridFlags.CANNOT_CARRY);
+    public GridFlags[] getFlags() {
+        return new GridFlags[] { GridFlags.CANNOT_CARRY };
     }
 
     @Override
@@ -131,40 +140,6 @@ public class TileConnectorQuartz
         return this.cachedSelectionBounds;
     }
 
-    @Override
-    public void createAELink() {
-        if( !world.isRemote ) {
-            if( this.gridNode == null || this.proxy == null || this.outerProxy == null ) {
-                this.proxy = new AENetworkProxy(this, "proxy", new ItemStack(BlockRegistryAE2.CONNECTOR_QUARTZ, 1), true);
-                this.proxy.setValidSides(EnumSet.noneOf(EnumFacing.class));
-                this.proxy.setIdlePowerUsage(0.0D);
-                this.proxy.setFlags(GridFlags.CANNOT_CARRY);
-                this.proxy.onReady();
-
-                this.outerProxy = new AENetworkProxy(this, "outer", this.proxy.getMachineRepresentation(), true);
-                this.outerProxy.setIdlePowerUsage(0.0D);
-                this.outerProxy.setFlags(GridFlags.CANNOT_CARRY);
-                this.outerProxy.setValidSides(this.getConnectableSides());
-                this.outerProxy.onReady();
-
-                this.gridNode = this.proxy.getNode();
-            }
-
-            this.proxy.getNode().updateState();
-            this.outerProxy.getNode().updateState();
-        }
-    }
-
-    @Override
-    public void destroyAELink() {
-        if( this.proxy != null ) {
-            this.proxy.invalidate();
-        }
-        if( this.outerProxy != null ) {
-            this.outerProxy.invalidate();
-        }
-    }
-
     public double extractAEPower(double amt, Actionable mode, Set<IEnergyGrid> seen) {
         double acquiredPower = 0.0D;
 
@@ -219,7 +194,7 @@ public class TileConnectorQuartz
     }
 
     @Override
-    public AENetworkProxy getProxy() {
-        return this.proxy;
+    public ItemStack getMachineRepresentation() {
+        return new ItemStack(this.getBlockType(), 1);
     }
 }

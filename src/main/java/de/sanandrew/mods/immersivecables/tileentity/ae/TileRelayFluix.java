@@ -45,7 +45,7 @@ public class TileRelayFluix
     }
 
     @Override
-    public EnumSet<GridFlags> getFlags() {
+    public GridFlags[] getFlags() {
         return this.getType().flags;
     }
 

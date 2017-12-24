@@ -29,6 +29,7 @@ public class ICGuiConfig
     private static List<IConfigElement> getCfgElements() {
         List<IConfigElement> configElements = new ArrayList<>();
         configElements.add(new ConfigElement(ICConfiguration.getCategory(ICConfiguration.CAT_AE2)));
+        configElements.add(new ConfigElement(ICConfiguration.getCategory(ICConfiguration.CAT_RS)));
         return configElements;
     }
 }

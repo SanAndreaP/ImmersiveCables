@@ -11,6 +11,7 @@ import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.common.IESaveData;
 import blusunrize.immersiveengineering.common.blocks.IEBlockInterfaces;
 import blusunrize.immersiveengineering.common.util.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -111,6 +112,8 @@ public abstract class BlockConnectable
         if( !world.isRemote ) {
             TileEntity tile = world.getTileEntity(pos);
             if( tile != null ) {
+                ImmersiveNetHandler.INSTANCE.clearAllConnectionsFor(Utils.toCC(tile), world, new TargetingInfo(EnumFacing.UP, 0.0F, 0.0F, 0.0F));
+                IESaveData.setDirty(world.provider.getDimension());
                 tile.invalidate();
             }
             return super.rotateBlock(world, pos, axis);
@@ -160,5 +163,23 @@ public abstract class BlockConnectable
         }
 
         return null;
+    }
+
+    @Override
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+        if( world.isAirBlock(pos.offset(this.getFacing(world, pos).getOpposite())) ) {
+            if( world instanceof World ) {
+                ((World) world).destroyBlock(pos, true);
+            }
+        }
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
+        this.onNeighborChange(worldIn, pos, pos.offset(this.getFacing(worldIn, pos)));
+    }
+
+    protected EnumFacing getFacing(IBlockAccess world, BlockPos pos) {
+        return !world.isAirBlock(pos) ? world.getBlockState(pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
     }
 }

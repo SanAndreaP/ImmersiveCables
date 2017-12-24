@@ -6,8 +6,10 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.tileentity.rs;
 
+import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
+import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import com.raoulvdberge.refinedstorage.api.network.INetworkMaster;
 import com.raoulvdberge.refinedstorage.api.network.INetworkNode;
 import de.sanandrew.mods.immersivecables.block.rs.BlockRegistryRS;
@@ -39,15 +41,19 @@ public class TileTransformerRefined
     @Override
     public void update() {
         if( !this.loaded ) {
-            this.loaded = true;
-            TileEntity connected = this.world.getTileEntity(this.pos.offset(this.getFacing().getOpposite()));
-            if( connected instanceof INetworkNode ) {
-                INetworkNode node = (INetworkNode) connected;
-                if( node.getNetwork() != null ) {
-                    node.getNetwork().getNodeGraph().rebuild();
+            try {
+                this.loaded = true;
+                TileEntity connected = this.world.getTileEntity(this.pos.offset(this.getFacing().getOpposite()));
+                if( connected instanceof INetworkNode ) {
+                    INetworkNode node = (INetworkNode) connected;
+                    if( node.getNetwork() != null ) {
+                        node.getNetwork().getNodeGraph().rebuild();
+                    }
+                } else if( connected instanceof INetworkMaster ) {
+                    ((INetworkMaster) connected).getNodeGraph().rebuild();
                 }
-            } else if( connected instanceof INetworkMaster ) {
-                ((INetworkMaster) connected).getNodeGraph().rebuild();
+            } catch( NullPointerException ex ) {
+                this.loaded = false;
             }
         }
     }
@@ -130,6 +136,10 @@ public class TileTransformerRefined
         return new ItemStack(BlockRegistryRS.TRANSFORMER_RS, 1, 0);
     }
 
+    @Override
+    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
+        return super.canConnectCable(cableType, target) && this.limitType == null;
+    }
 
     public boolean isRsActive() {
         return this.isActive;

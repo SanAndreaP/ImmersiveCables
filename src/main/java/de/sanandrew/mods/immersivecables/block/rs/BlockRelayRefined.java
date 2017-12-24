@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -60,5 +61,10 @@ public class BlockRelayRefined
     @Override
     public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
         list.add(new ItemStack(item, 1, 0));
+    }
+
+    @Override
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+        return false;
     }
 }
