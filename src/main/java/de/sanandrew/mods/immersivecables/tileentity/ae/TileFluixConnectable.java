@@ -174,8 +174,8 @@ public abstract class TileFluixConnectable
 
     @Override
     public void invalidate() {
-        if( this.world != null && !this.world.isRemote && this.gridNode != null ) {
-            this.gridNode.updateState();
+        if( this.world != null && !this.world.isRemote ) {
+            this.destroyAELink();
         }
 
         super.invalidate();
@@ -183,8 +183,8 @@ public abstract class TileFluixConnectable
 
     @Override
     public void onChunkUnload() {
-        if( this.world != null && !this.world.isRemote && this.gridNode != null ) {
-            this.gridNode.updateState();
+        if( this.world != null && !this.world.isRemote ) {
+            this.destroyAELink();
         }
     }
 

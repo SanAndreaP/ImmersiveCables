@@ -15,6 +15,7 @@ import net.minecraft.util.IStringSerializable;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Locale;
 
 public enum FluixType
         implements IStringSerializable
@@ -37,7 +38,7 @@ public enum FluixType
 
     @Override
     public String getName() {
-        return this.name().toLowerCase();
+        return this.name().toLowerCase(Locale.ROOT);
     }
 
     @Override

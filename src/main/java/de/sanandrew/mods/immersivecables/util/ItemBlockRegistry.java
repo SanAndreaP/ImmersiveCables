@@ -17,7 +17,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ICConstants.ID)
 public final class ItemBlockRegistry
 {
     public static final BlockCoil BLOCK_COIL = new BlockCoil();
