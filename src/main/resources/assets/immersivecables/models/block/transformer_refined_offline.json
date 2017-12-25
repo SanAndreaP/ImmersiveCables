@@ -5,7 +5,8 @@
     "base_top": "immersivecables:blocks/transformer_refined_top",
     "base_bottom": "immersivecables:blocks/transformer_refined_bottom",
     "rod": "immersivecables:blocks/relay_refined",
-    "particle": "immersivecables:blocks/transformer_refined_top"
+    "particle": "immersivecables:blocks/transformer_refined_top",
+    "base_side_glow": "immersivecables:blocks/transformer_refined_side"
   },
   "elements": [
     {
@@ -82,6 +83,19 @@
         "up": { "texture": "#rod", "uv": [ 6.0, 1.0, 9.0, 4.0 ] },
         "down": { "texture": "#rod", "uv": [ 6.0, 1.0, 9.0, 4.0 ] }
       }
-    }
-  ]
+    },
+	{
+      "name": "glow",
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 9, 16 ],
+      "faces": {
+        "north": { "texture": "#base_side_glow", "uv": [ 0, 7, 16, 16 ] },
+        "east": { "texture": "#base_side_glow", "uv": [ 0, 7, 16, 16 ] },
+        "south": { "texture": "#base_side_glow", "uv": [ 0, 7, 16, 16 ] },
+        "west": { "texture": "#base_side_glow", "uv": [ 0, 7, 16, 16 ] },
+        "down": { "texture": "#base_bottom", "uv": [ 0, 0, 16, 16 ] },
+        "up": { "texture": "#base_top", "uv": [ 0, 0, 16, 16 ] }
+	  }
+	}
+	]
 }
