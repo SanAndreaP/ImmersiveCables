@@ -20,7 +20,7 @@ import java.util.List;
 public class ASMHelper
 {
     public static byte[] createBytes(ClassNode cnode, int cwFlags) {
-        ClassWriter cw = new ClassWriter(cwFlags);
+        MCClassWriter cw = new MCClassWriter(cwFlags);
         cnode.accept(cw);
         byte[] bArr = cw.toByteArray();
         ICConstants.LOG.log(Level.INFO, String.format("Class %s successfully transformed!", cnode.name));
