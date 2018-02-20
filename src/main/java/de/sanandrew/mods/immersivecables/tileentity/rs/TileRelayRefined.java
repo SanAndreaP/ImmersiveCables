@@ -6,10 +6,7 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.tileentity.rs;
 
-import blusunrize.immersiveengineering.api.TargetingInfo;
-import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import com.raoulvdberge.refinedstorage.api.network.INetwork;
 import com.raoulvdberge.refinedstorage.api.network.INetworkNodeVisitor;
 import de.sanandrew.mods.immersivecables.block.rs.BlockRegistryRS;
@@ -26,12 +23,6 @@ import java.util.List;
 public class TileRelayRefined
         extends TileRefinedConnectable
 {
-    @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.getFacing();
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.1D, 0.5D + facing.getFrontOffsetY() * 0.1D, 0.5D + facing.getFrontOffsetZ() * 0.1D);
-    }
-
     @Override
     public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
         EnumFacing facing = this.getFacing();
@@ -89,7 +80,7 @@ public class TileRelayRefined
     }
 
     @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return super.canConnectCable(cableType, target) && (this.limitType == null || this.limitType == cableType);
+    protected boolean isRelay() {
+        return true;
     }
 }

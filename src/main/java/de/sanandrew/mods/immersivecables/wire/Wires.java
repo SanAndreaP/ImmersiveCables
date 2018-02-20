@@ -23,13 +23,11 @@ public enum Wires
 
     public final String key = this.name().toLowerCase(Locale.ROOT);
     public final WireType type;
+    public final String category;
 
     Wires(WireType type) {
         this.type = type;
-    }
-
-    public WireType getType() {
-        return this.type;
+        this.category = type.getCategory() == null ? "UNKNOWN" : type.getCategory();
     }
 
     @Override

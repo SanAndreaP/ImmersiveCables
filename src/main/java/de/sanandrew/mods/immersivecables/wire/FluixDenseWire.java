@@ -5,6 +5,8 @@ import de.sanandrew.mods.immersivecables.util.ICConfiguration;
 import de.sanandrew.mods.immersivecables.util.ItemBlockRegistry;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nullable;
+
 public class FluixDenseWire
         extends FluixWire
 {
@@ -36,5 +38,11 @@ public class FluixDenseWire
     @Override
     public double getSlack() {
         return 1.008;
+    }
+
+    @Nullable
+    @Override
+    public String getCategory() {
+        return "IC_ME_D";
     }
 }

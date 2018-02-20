@@ -169,7 +169,7 @@ public abstract class BlockConnectable
 
     @Override
     public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-        if( world.isAirBlock(pos.offset(this.getFacing(world, pos).getOpposite())) ) {
+        if( world.isAirBlock(pos.offset(getFacing(world, pos).getOpposite())) ) {
             if( world instanceof World ) {
                 ((World) world).destroyBlock(pos, true);
             }
@@ -177,11 +177,12 @@ public abstract class BlockConnectable
     }
 
     @Override
+    @Deprecated
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         this.onNeighborChange(worldIn, pos, fromPos);
     }
 
-    protected EnumFacing getFacing(IBlockAccess world, BlockPos pos) {
+    private static EnumFacing getFacing(IBlockAccess world, BlockPos pos) {
         return !world.isAirBlock(pos) ? world.getBlockState(pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
     }
 }

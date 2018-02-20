@@ -12,10 +12,7 @@ import appeng.api.networking.events.MENetworkEventSubscribe;
 import appeng.api.networking.events.MENetworkPowerStatusChange;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
-import blusunrize.immersiveengineering.api.TargetingInfo;
-import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import de.sanandrew.mods.immersivecables.block.ae2.BlockTransformerFluix;
 import de.sanandrew.mods.immersivecables.block.ae2.FluixType;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
@@ -51,11 +48,6 @@ public class TileTransformerFluix
     }
 
     @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return this.getType().wireType == cableType && this.limitType == null;
-    }
-
-    @Override
     public GridFlags[] getFlags() {
         return this.getType().flags;
     }
@@ -63,12 +55,6 @@ public class TileTransformerFluix
     @Override
     public AECableType getCableConnectionType(AEPartLocation aePartLocation) {
         return this.getType().cableType;
-    }
-
-    @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.getFacing();
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.5D, 0.5D + facing.getFrontOffsetY() * 0.5D, 0.5D + facing.getFrontOffsetZ() * 0.5D);
     }
 
     @Override
@@ -130,6 +116,11 @@ public class TileTransformerFluix
 
     private FluixType getType() {
         return this.world.isAirBlock(this.pos) ? FluixType.FLUIX : this.world.getBlockState(this.pos).getValue(FluixType.TYPE);
+    }
+
+    @Override
+    protected String getWireCategory() {
+        return this.getType().wireType.getCategory();
     }
 
     private void updateOnGridChange(boolean force) {

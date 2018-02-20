@@ -6,10 +6,7 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.tileentity.rs;
 
-import blusunrize.immersiveengineering.api.TargetingInfo;
-import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import com.raoulvdberge.refinedstorage.api.network.INetwork;
 import com.raoulvdberge.refinedstorage.api.network.INetworkNodeVisitor;
 import com.raoulvdberge.refinedstorage.api.network.node.INetworkNodeProxy;
@@ -36,7 +33,7 @@ public class TileTransformerRefined
         extends TileRefinedConnectable
         implements ITickable
 {
-    protected boolean loaded;
+    private boolean loaded;
     private boolean isActive;
 
     @Override
@@ -58,12 +55,6 @@ public class TileTransformerRefined
         if( !this.world.isAirBlock(this.pos) ) {
             this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos).withProperty(BlockTransformerRefined.ACTIVE, this.isActive), 3);
         }
-    }
-
-    @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.getFacing();
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * 0.5D, 0.5D + facing.getFrontOffsetY() * 0.5D, 0.5D + facing.getFrontOffsetZ() * 0.5D);
     }
 
     @Override
@@ -126,11 +117,6 @@ public class TileTransformerRefined
     @Override
     public ItemStack getItemStack() {
         return new ItemStack(BlockRegistryRS.TRANSFORMER_RS, 1, 0);
-    }
-
-    @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return super.canConnectCable(cableType, target) && this.limitType == null;
     }
 
     public boolean isRsActive() {

@@ -7,6 +7,8 @@ import de.sanandrew.mods.immersivecables.util.ItemBlockRegistry;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nullable;
+
 public class FluixWire
         extends WireType
 {
@@ -58,5 +60,11 @@ public class FluixWire
     @Override
     public TextureAtlasSprite getIcon(ImmersiveNetHandler.Connection connection) {
         return iconDefaultWire;
+    }
+
+    @Nullable
+    @Override
+    public String getCategory() {
+        return "IC_ME_S";
     }
 }

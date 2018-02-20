@@ -9,10 +9,7 @@ package de.sanandrew.mods.immersivecables.tileentity.ae;
 import appeng.api.networking.GridFlags;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
-import blusunrize.immersiveengineering.api.TargetingInfo;
-import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import de.sanandrew.mods.immersivecables.block.ae2.FluixType;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
 import net.minecraft.util.EnumFacing;
@@ -40,11 +37,6 @@ public class TileRelayFluix
     }
 
     @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return this.getType().wireType == cableType && (this.limitType == null || this.limitType == cableType);
-    }
-
-    @Override
     public GridFlags[] getFlags() {
         return this.getType().flags;
     }
@@ -55,17 +47,20 @@ public class TileRelayFluix
     }
 
     @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.getFacing();
-        double offset = this.getType() == FluixType.FLUIX_DENSE ? 0.4D : 0.2D;
-        return new Vec3d(0.5D + facing.getFrontOffsetX() * offset, 0.5D + facing.getFrontOffsetY() * offset, 0.5D + facing.getFrontOffsetZ() * offset);
-    }
-
-    @Override
     public Vec3d getConnectionOffset(ImmersiveNetHandler.Connection con) {
         EnumFacing facing = this.getFacing();
         double offset = this.getType() == FluixType.FLUIX_DENSE ? 0.3D : 0.1D;
         return new Vec3d(0.5D + facing.getFrontOffsetX() * offset, 0.5D + facing.getFrontOffsetY() * offset, 0.5D + facing.getFrontOffsetZ() * offset);
+    }
+
+    @Override
+    protected String getWireCategory() {
+        return this.getType().wireType.getCategory();
+    }
+
+    @Override
+    protected boolean isRelay() {
+        return true;
     }
 
     @Override

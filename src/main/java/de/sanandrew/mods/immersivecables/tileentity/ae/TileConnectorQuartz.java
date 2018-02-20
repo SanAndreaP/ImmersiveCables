@@ -16,10 +16,7 @@ import appeng.api.util.AEPartLocation;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
 import appeng.me.helpers.IGridProxyable;
-import blusunrize.immersiveengineering.api.TargetingInfo;
-import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
-import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
 import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.item.ItemStack;
@@ -79,11 +76,6 @@ public class TileConnectorQuartz
     }
 
     @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return Wires.QUARTZ.type == cableType && (this.limitType == null || this.limitType == cableType);
-    }
-
-    @Override
     public GridFlags[] getFlags() {
         return new GridFlags[] { GridFlags.CANNOT_CARRY };
     }
@@ -94,9 +86,13 @@ public class TileConnectorQuartz
     }
 
     @Override
-    public Vec3d getRaytraceOffset(IImmersiveConnectable link) {
-        EnumFacing facing = this.getFacing();
-        return new Vec3d(0.5D + facing.getFrontOffsetX(), 0.5D + facing.getFrontOffsetY(), 0.5D + facing.getFrontOffsetZ());
+    protected String getWireCategory() {
+        return Wires.QUARTZ.category;
+    }
+
+    @Override
+    protected boolean isRelay() {
+        return true;
     }
 
     @Override

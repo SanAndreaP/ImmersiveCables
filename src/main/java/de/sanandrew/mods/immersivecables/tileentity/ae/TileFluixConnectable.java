@@ -21,6 +21,7 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
+import blusunrize.immersiveengineering.api.energy.wires.WireApi;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import blusunrize.immersiveengineering.common.blocks.IEBlockInterfaces;
 import blusunrize.immersiveengineering.common.util.Utils;
@@ -36,6 +37,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3i;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -50,15 +52,15 @@ public abstract class TileFluixConnectable
         implements IActionHost, IGridProxyable, ITickable, IEBlockInterfaces.IAdvancedSelectionBounds
 {
 //    public IGridNode gridNode;
-    public Queue<IGridConnection> connections = new ConcurrentLinkedQueue<>();
-    public AENetworkProxy proxy = this.createProxy();
+    private Queue<IGridConnection> connections = new ConcurrentLinkedQueue<>();
+    AENetworkProxy proxy = this.createProxy();
     public EntityPlayer ownerCache;
 
-    protected List<AxisAlignedBB> cachedSelectionBounds;
+    List<AxisAlignedBB> cachedSelectionBounds;
 
-    protected boolean loaded = false;
+    private boolean loaded = false;
 
-    protected AENetworkProxy createProxy() {
+    private AENetworkProxy createProxy() {
         return new AENetworkProxy(this, "proxy", new ItemStack(Blocks.BONE_BLOCK), true);
     }
 
@@ -113,6 +115,12 @@ public abstract class TileFluixConnectable
     }
 
     @Override
+    public boolean canConnectCable(WireType cableType, TargetingInfo target, Vec3i offset) {
+        String category = cableType.getCategory();
+        return this.getWireCategory().equals(category) && (this.limitType == null || this.isRelay() && WireApi.canMix(this.limitType, cableType));
+    }
+
+    @Override
     public void removeCable(ImmersiveNetHandler.Connection connection) {
         if( !this.world.isRemote && connection != null ) {
             BlockPos opposite = connection.end;
@@ -137,6 +145,7 @@ public abstract class TileFluixConnectable
     public abstract double getIdlePowerUsage();
     public abstract EnumSet<EnumFacing> getConnectableSides();
     public abstract GridFlags[] getFlags();
+    protected abstract String getWireCategory();
 
     @Override
     public void update() {

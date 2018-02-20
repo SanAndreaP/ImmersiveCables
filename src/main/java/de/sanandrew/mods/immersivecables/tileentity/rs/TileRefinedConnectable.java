@@ -10,6 +10,7 @@ import blusunrize.immersiveengineering.api.TargetingInfo;
 import blusunrize.immersiveengineering.api.energy.wires.IImmersiveConnectable;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
 import blusunrize.immersiveengineering.api.energy.wires.TileEntityImmersiveConnectable;
+import blusunrize.immersiveengineering.api.energy.wires.WireApi;
 import blusunrize.immersiveengineering.api.energy.wires.WireType;
 import blusunrize.immersiveengineering.common.blocks.IEBlockInterfaces;
 import blusunrize.immersiveengineering.common.util.Utils;
@@ -31,6 +32,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
@@ -45,8 +47,8 @@ public abstract class TileRefinedConnectable
         implements IEBlockInterfaces.IAdvancedSelectionBounds, ICoilConnectable,
                            INetworkNodeProxy<TileRefinedConnectable.NetworkNodeRefinedConnectable>
 {
-    protected List<AxisAlignedBB> cachedSelectionBounds;
-    protected NetworkNodeRefinedConnectable node;
+    List<AxisAlignedBB> cachedSelectionBounds;
+    private NetworkNodeRefinedConnectable node;
 
     @Override
     public boolean isOverrideBox(AxisAlignedBB box, EntityPlayer entityPlayer, RayTraceResult ray, ArrayList<AxisAlignedBB> arrayList) {
@@ -109,8 +111,9 @@ public abstract class TileRefinedConnectable
     }
 
     @Override
-    public boolean canConnectCable(WireType cableType, TargetingInfo target) {
-        return cableType == Wires.REFINED.type;
+    public boolean canConnectCable(WireType cableType, TargetingInfo target, Vec3i offset) {
+        String category = cableType.getCategory();
+        return Wires.REFINED.category.equals(category) && (this.limitType == null || this.isRelay() && WireApi.canMix(this.limitType, cableType));
     }
 
     @Nonnull
@@ -160,7 +163,7 @@ public abstract class TileRefinedConnectable
     {
         public static final String ID = "ic_refined_connectable";
 
-        public NetworkNodeRefinedConnectable() {
+        NetworkNodeRefinedConnectable() {
             super(TileRefinedConnectable.this.world, TileRefinedConnectable.this.pos);
         }
 

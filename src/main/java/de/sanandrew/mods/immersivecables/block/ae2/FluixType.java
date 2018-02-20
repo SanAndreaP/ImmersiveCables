@@ -18,8 +18,8 @@ import java.util.Locale;
 public enum FluixType
         implements IStringSerializable
 {
-    FLUIX(Wires.FLUIX.getType(), AECableType.SMART),
-    FLUIX_DENSE(Wires.FLUIX_DENSE.getType(), AECableType.DENSE_SMART, GridFlags.DENSE_CAPACITY);
+    FLUIX(Wires.FLUIX.type, AECableType.SMART),
+    FLUIX_DENSE(Wires.FLUIX_DENSE.type, AECableType.DENSE_SMART, GridFlags.DENSE_CAPACITY);
 
     public static final PropertyEnum<FluixType> TYPE = PropertyEnum.create("type", FluixType.class);
     public static final FluixType[] VALUES = values();
