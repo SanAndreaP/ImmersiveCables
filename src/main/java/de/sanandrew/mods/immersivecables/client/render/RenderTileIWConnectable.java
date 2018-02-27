@@ -109,8 +109,8 @@ public class RenderTileIWConnectable
                         break;
                     }
 
-                    Vec3d v0 = i > 0 ? vertex[i - 1].subtract(connection.start.getX(), connection.start.getY(), connection.start.getZ()) : initPos;
-                    Vec3d v1 = vertex[i].subtract(connection.start.getX(), connection.start.getY(), connection.start.getZ());
+                    Vec3d v0 = i > 0 ? vertex[i - 1] : initPos;
+                    Vec3d v1 = vertex[i];
 
                     buffer.setTranslation(tilePos.x, tilePos.y, tilePos.z);
 

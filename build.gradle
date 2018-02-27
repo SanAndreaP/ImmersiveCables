@@ -25,7 +25,7 @@ idea {
 }
 
 task dlImmersiveEngineering(type: LibDownloader) {
-    sourceUrl = 'https://minecraft.curseforge.com/projects/immersive-engineering/files/2532895/download'
+    sourceUrl = 'https://minecraft.curseforge.com/projects/immersive-engineering/files/2535471/download'
     target = file('libs/ImmEngineering.jar')
 }
 

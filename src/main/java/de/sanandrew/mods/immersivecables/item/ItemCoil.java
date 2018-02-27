@@ -146,7 +146,7 @@ public class ItemCoil
                                                                                                                                        tile.getPos().getY(), tile.getPos().getZ());
                                         Vec3d end = nodeLink.getConnectionOffset(tmpConn, targetLink, offsetLink).addVector(tileEntityLinkingPos.getPos().getX(),
                                                                                                                             tileEntityLinkingPos.getPos().getY(), tileEntityLinkingPos.getPos().getZ());
-                                        boolean canSee = ApiUtils.raytraceAlongCatenary(tmpConn, (p) -> {
+                                        boolean canSee = ApiUtils.raytraceAlongCatenaryRelative(tmpConn, (p) -> {
                                             if (ignore.contains(p.getLeft())) {
                                                 return false;
                                             }
