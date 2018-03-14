@@ -62,6 +62,7 @@ public class TileConnectorQuartz
         this.outerProxy.setIdlePowerUsage(ICConfiguration.ae2QuartzConnectorPowerDrain);
         this.outerProxy.setFlags(GridFlags.CANNOT_CARRY);
         this.outerProxy.setValidSides(EnumSet.of(this.getFacing().getOpposite()));
+        this.outerProxy.setOwner(this.ownerCache);
         this.outerProxy.onReady();
     }
 

@@ -51,7 +51,6 @@ public abstract class TileFluixConnectable
         extends TileEntityImmersiveConnectable
         implements IActionHost, IGridProxyable, ITickable, IEBlockInterfaces.IAdvancedSelectionBounds
 {
-//    public IGridNode gridNode;
     private Queue<IGridConnection> connections = new ConcurrentLinkedQueue<>();
     AENetworkProxy proxy = this.createProxy();
     public EntityPlayer ownerCache;
