@@ -6,6 +6,10 @@
    *******************************************************************************************************************/
 package de.sanandrew.mods.immersivecables.util;
 
+import appeng.api.networking.IGridNode;
+import appeng.api.util.DimensionalCoord;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -29,5 +33,9 @@ public class ImmersiveCables
         ICConfiguration.initialize(event);
 
         proxy.preInit(event);
+    }
+
+    public static boolean isChunkLoaded(IChunkProvider provider, int x, int z) {
+        return provider instanceof ChunkProviderServer ? ((ChunkProviderServer) provider).chunkExists(x, z) : provider.isChunkGeneratedAt(x, z);
     }
 }

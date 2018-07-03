@@ -23,6 +23,7 @@ import com.raoulvdberge.refinedstorage.apiimpl.API;
 import com.raoulvdberge.refinedstorage.apiimpl.network.node.NetworkNode;
 import com.raoulvdberge.refinedstorage.capability.CapabilityNetworkNodeProxy;
 import de.sanandrew.mods.immersivecables.item.ICoilConnectable;
+import de.sanandrew.mods.immersivecables.util.ImmersiveCables;
 import de.sanandrew.mods.immersivecables.wire.Wires;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.player.EntityPlayer;
@@ -180,10 +181,12 @@ public abstract class TileRefinedConnectable
                         continue;
                     }
 
-                    TileEntity connTile = TileRefinedConnectable.this.world.getTileEntity(opposite);
-                    if( connTile instanceof TileRefinedConnectable ) {
-                        TileRefinedConnectable connectable = (TileRefinedConnectable) connTile;
-                        operator.apply(TileRefinedConnectable.this.world, opposite, connectable.getFacing().getOpposite());
+                    if( ImmersiveCables.isChunkLoaded(TileRefinedConnectable.this.world.getChunkProvider(), opposite.getX() >> 4, opposite.getZ() >> 4) ) {
+                        TileEntity connTile = TileRefinedConnectable.this.world.getTileEntity(opposite);
+                        if( connTile instanceof TileRefinedConnectable ) {
+                            TileRefinedConnectable connectable = (TileRefinedConnectable) connTile;
+                            operator.apply(TileRefinedConnectable.this.world, opposite, connectable.getFacing().getOpposite());
+                        }
                     }
                 }
             }
