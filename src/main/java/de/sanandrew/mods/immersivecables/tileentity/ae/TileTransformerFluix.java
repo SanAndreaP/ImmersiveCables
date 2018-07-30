@@ -13,6 +13,7 @@ import appeng.api.networking.events.MENetworkPowerStatusChange;
 import appeng.api.util.AECableType;
 import appeng.api.util.AEPartLocation;
 import blusunrize.immersiveengineering.api.energy.wires.ImmersiveNetHandler;
+import de.sanandrew.mods.immersivecables.block.BlockConnectable;
 import de.sanandrew.mods.immersivecables.block.ae2.BlockTransformerFluix;
 import de.sanandrew.mods.immersivecables.block.ae2.FluixType;
 import de.sanandrew.mods.immersivecables.util.ICConfiguration;
@@ -137,33 +138,7 @@ public class TileTransformerFluix
     @Override
     public List<AxisAlignedBB> getAdvancedSelectionBounds() {
         if( this.cachedSelectionBounds == null ) {
-            EnumFacing facing = this.getFacing();
-            switch( facing ) {
-                case UP:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D).offset(this.pos),
-                                                               new AxisAlignedBB(0.3125D, 0.5625D, 0.3125D, 0.6875D, 1.0D, 0.6875D).offset(this.pos));
-                    break;
-                case DOWN:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.0D, 0.4375D, 0.0D, 1.0D, 1.0D, 1.0D).offset(this.pos),
-                                                               new AxisAlignedBB(0.3125D, 0.0D, 0.3125D, 0.6875D, 0.4375D, 0.6875D).offset(this.pos));
-                    break;
-                case NORTH:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 1.0D, 1.0D, 1.0D).offset(this.pos),
-                                                               new AxisAlignedBB(0.3125D, 0.3125D, 0.0D, 0.6875D, 0.6875D, 0.4375D).offset(this.pos));
-                    break;
-                case SOUTH:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.5625D).offset(this.pos),
-                                                               new AxisAlignedBB(0.3125D, 0.3125D, 0.5625D, 0.6875D, 0.6875D, 1.0D).offset(this.pos));
-                    break;
-                case EAST:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.5625D, 1.0D, 1.0D).offset(this.pos),
-                                                               new AxisAlignedBB(0.5625D, 0.3125D, 0.3125D, 1.0D, 0.6875D, 0.6875D).offset(this.pos));
-                    break;
-                case WEST:
-                    this.cachedSelectionBounds = Arrays.asList(new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D).offset(this.pos),
-                                                               new AxisAlignedBB(0.0D, 0.3125D, 0.3125D, 0.4375D, 0.6875D, 0.6875D).offset(this.pos));
-                    break;
-            }
+            this.cachedSelectionBounds = BlockConnectable.getTransformerBB(this.getFacing(), this.pos);
         }
 
         return this.cachedSelectionBounds;

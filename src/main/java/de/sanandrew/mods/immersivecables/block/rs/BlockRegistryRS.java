@@ -14,6 +14,7 @@ import de.sanandrew.mods.immersivecables.util.ICConstants;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -27,8 +28,8 @@ public final class BlockRegistryRS
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(TRANSFORMER_RS, RELAY_RS);
 
-        GameRegistry.registerTileEntity(TileTransformerRefined.class, ICConstants.ID + ":te_transformer_refined");
-        GameRegistry.registerTileEntity(TileRelayRefined.class, ICConstants.ID + ":te_relay_refined");
+        GameRegistry.registerTileEntity(TileTransformerRefined.class, new ResourceLocation(ICConstants.ID, "te_transformer_refined"));
+        GameRegistry.registerTileEntity(TileRelayRefined.class, new ResourceLocation(ICConstants.ID, "te_relay_refined"));
     }
 
     public static void registerItems(RegistryEvent.Register<Item> event) {

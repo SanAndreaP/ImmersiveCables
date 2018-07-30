@@ -16,6 +16,7 @@ import de.sanandrew.mods.immersivecables.util.ICConstants;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -30,9 +31,9 @@ public final class BlockRegistryAE2
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(TRANSFORMER_FLUIX, RELAY_FLUIX, CONNECTOR_QUARTZ);
 
-        GameRegistry.registerTileEntity(TileTransformerFluix.class, ICConstants.ID + ":te_transformer_fluix");
-        GameRegistry.registerTileEntity(TileRelayFluix.class, ICConstants.ID + ":te_relay_fluix");
-        GameRegistry.registerTileEntity(TileConnectorQuartz.class, ICConstants.ID + ":te_connector_quartz");
+        GameRegistry.registerTileEntity(TileTransformerFluix.class, new ResourceLocation(ICConstants.ID, "te_transformer_fluix"));
+        GameRegistry.registerTileEntity(TileRelayFluix.class, new ResourceLocation(ICConstants.ID, "te_relay_fluix"));
+        GameRegistry.registerTileEntity(TileConnectorQuartz.class, new ResourceLocation(ICConstants.ID, "te_connector_quartz"));
     }
 
     public static void registerItems(RegistryEvent.Register<Item> event) {

@@ -29,6 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BlockConnectable
@@ -184,5 +185,30 @@ public abstract class BlockConnectable
 
     private static EnumFacing getFacing(IBlockAccess world, BlockPos pos) {
         return !world.isAirBlock(pos) ? world.getBlockState(pos).getValue(BlockDirectional.FACING) : EnumFacing.UP;
+    }
+
+    public static List<AxisAlignedBB> getTransformerBB(EnumFacing facing, BlockPos pos) {
+        switch( facing ) {
+            case UP:
+                return Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D).offset(pos),
+                                     new AxisAlignedBB(0.3125D, 0.5625D, 0.3125D, 0.6875D, 1.0D, 0.6875D).offset(pos));
+            case DOWN:
+                return Arrays.asList(new AxisAlignedBB(0.0D, 0.4375D, 0.0D, 1.0D, 1.0D, 1.0D).offset(pos),
+                                     new AxisAlignedBB(0.3125D, 0.0D, 0.3125D, 0.6875D, 0.4375D, 0.6875D).offset(pos));
+            case NORTH:
+                return Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.4375D, 1.0D, 1.0D, 1.0D).offset(pos),
+                                     new AxisAlignedBB(0.3125D, 0.3125D, 0.0D, 0.6875D, 0.6875D, 0.4375D).offset(pos));
+            case SOUTH:
+                return Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.5625D).offset(pos),
+                                     new AxisAlignedBB(0.3125D, 0.3125D, 0.5625D, 0.6875D, 0.6875D, 1.0D).offset(pos));
+            case EAST:
+                return Arrays.asList(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.5625D, 1.0D, 1.0D).offset(pos),
+                                     new AxisAlignedBB(0.5625D, 0.3125D, 0.3125D, 1.0D, 0.6875D, 0.6875D).offset(pos));
+            case WEST:
+                return Arrays.asList(new AxisAlignedBB(0.4375D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D).offset(pos),
+                                     new AxisAlignedBB(0.0D, 0.3125D, 0.3125D, 0.4375D, 0.6875D, 0.6875D).offset(pos));
+        }
+
+        return null;
     }
 }
