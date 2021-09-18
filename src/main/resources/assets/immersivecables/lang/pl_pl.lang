@@ -1,0 +1,19 @@
+item.immersivecables:wire_coil.fluix.name=Uzwojenie z fluixu
+item.immersivecables:wire_coil.fluix_dense.name=Uzwojenie z gęstego fluixu
+item.immersivecables:wire_coil.quartz.name=Uzwojenie z włókna kwarcowego
+item.immersivecables:wire_coil.refined.name=Uzwojenie z ulepszonego włókna
+
+tile.immersivecables:coil_block.0.name=Blok uzwojenia z fluixu
+tile.immersivecables:coil_block.1.name=Uzwojenie z gęstego fluixu
+tile.immersivecables:coil_block.2.name=Uzwojenie z włókna kwarcowego
+tile.immersivecables:coil_block.3.name=Uzwojenie z ulepszonego włókna
+tile.immersivecables:transformer_fluix.0.name=Transformator z fluixu
+tile.immersivecables:transformer_fluix.1.name=Transformator z gęstego fluixu
+tile.immersivecables:transformer_fluix.name=Transformator z włókna kwarcowego
+tile.immersivecables:relay_fluix.0.name=Przekaźnik kablowy z fluixu
+tile.immersivecables:relay_fluix.1.name=Przekaźnik kablowy z gęstego fluixu
+tile.immersivecables:connector_quartz.name=Przekaźnik kablowy z włókna kwarcowego
+tile.immersivecables:transformer_refined.name=Ulepszony transformator
+tile.immersivecables:relay_refined.name=Ulepszony przekaźnik
+
+itemGroup.immersivecables=Immersive Cables
