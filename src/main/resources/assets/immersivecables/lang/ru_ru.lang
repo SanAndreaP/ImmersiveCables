@@ -1,0 +1,19 @@
+item.immersivecables:wire_coil.fluix.name=Флайксовый моток проволоки
+item.immersivecables:wire_coil.fluix_dense.name=Плотный флайксовый моток проволоки
+item.immersivecables:wire_coil.quartz.name=Кварцевый оптоволоконный моток проволоки
+item.immersivecables:wire_coil.refined.name=Очищенный оптоволоконный моток проволоки
+
+tile.immersivecables:coil_block.0.name=Блок флайксового мотка
+tile.immersivecables:coil_block.1.name=Блок плотного флайксового мотка
+tile.immersivecables:coil_block.2.name=Блок кварцевого оптоволоконного мотка
+tile.immersivecables:coil_block.3.name=Блок очищенного оптоволоконного мотка
+tile.immersivecables:transformer_fluix.0.name=Флайксовый трансформатор
+tile.immersivecables:transformer_fluix.1.name=Плотный флайксовый трансформатор
+tile.immersivecables:transformer_fluix.name=Кварцевый оптоволоконный соединитель
+tile.immersivecables:relay_fluix.0.name=Флайксовое проволочное реле
+tile.immersivecables:relay_fluix.1.name=Плотный флайксовое проволочное реле
+tile.immersivecables:connector_quartz.name=Кварцевый оптоволоконный соединитель
+tile.immersivecables:transformer_refined.name=Усовершенствованный трансформатор
+tile.immersivecables:relay_refined.name=Усовершенствованное реле
+
+itemGroup.immersivecables=Immersive Cables
